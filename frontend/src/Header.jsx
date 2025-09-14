@@ -3,8 +3,7 @@ import AppBar from "@mui/material/AppBar";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
+import HeaderMenu from "./HeaderMenu";
 
 export default function Header() {
     return (
@@ -12,20 +11,15 @@ export default function Header() {
             <Box sx={{ p: 2, flexGrow: 1 }}>
                 <AppBar>
                     <Toolbar>
-                        <IconButton
-                            size="large"
-                            edge="start"
-                            color="inherit"
-                            sx={{ mr: 2 }}
-                        >
-                            <MenuIcon />
-                            {/* TODO: add menu functionality
-                             */}
-                        </IconButton>
+                        <HeaderMenu />
                         <Typography variant="h6" sx={{ flexGrow: 1 }}>
                             Tomas April
+                            {/* TODO: make dynamic (page title)
+                             */}
                         </Typography>
                         <Button color="inherit">Login</Button>
+                        {/* TODO: add WIP popup
+                         */}
                     </Toolbar>
                 </AppBar>
             </Box>

@@ -8,9 +8,6 @@ export default function Home() {
              */}
             {/* TODO: add home page content
              */}
-            {/* <Button href="/game" variant="contained" color="success">
-                Eat the children!
-            </Button> */}
             {/* TODO: add footer
              */}
         </>
