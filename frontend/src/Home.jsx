@@ -1,17 +1,18 @@
-import { Link } from "react-router";
-import "./App.css";
-import Button from "@mui/material/Button";
+import Header from "./Header";
 
 export default function Home() {
     return (
         <>
-            <h1>Home</h1>
-            <br />
-            <Link to={"/game"}>
-                <Button variant="contained" color="success">
-                    Eat the children!
-                </Button>
-            </Link>
+            <Header />
+            {/* TODO: choose home page design
+             */}
+            {/* TODO: add home page content
+             */}
+            {/* <Button href="/game" variant="contained" color="success">
+                Eat the children!
+            </Button> */}
+            {/* TODO: add footer
+             */}
         </>
     );
 }
