@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import HeaderMenu from "./HeaderMenu";
+import WipPopover from "./WipPopover";
 
 export default function Header({ title }) {
     return (
@@ -15,9 +16,9 @@ export default function Header({ title }) {
                         <Typography variant="h6" sx={{ flexGrow: 1 }}>
                             {title ? title : "Tomas April"}
                         </Typography>
-                        <Button color="inherit">Login</Button>
-                        {/* TODO: add WIP popup
-                         */}
+                        <WipPopover>
+                            <Button color="inherit">Login</Button>
+                        </WipPopover>
                     </Toolbar>
                 </AppBar>
             </Box>
