@@ -13,6 +13,8 @@ export default function Header({ title }) {
                 <AppBar>
                     <Toolbar>
                         <HeaderMenu />
+                        {/* TODO: add home button
+                         */}
                         <Typography variant="h6" sx={{ flexGrow: 1 }}>
                             {title ? title : "Tomas April"}
                         </Typography>

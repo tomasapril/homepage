@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import WipPopover from "./WipPopover";
 import Button from "@mui/material/Button";
 import Footer from "./Footer";
+import Container from "@mui/material/Container";
 
 export default function Game() {
     return (
@@ -16,21 +17,26 @@ export default function Game() {
                 }}
             >
                 <Header title={"Game"} />
-                <Box sx={{ textAlign: "center", mt: 4 }}>
-                    <Typography variant="h4">Eat the children!</Typography>
-                </Box>
-                <Box
+                <Container
                     sx={{
-                        flexGrow: 1,
                         display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
+                        flexDirection: "column",
+                        flexGrow: 1,
                     }}
                 >
-                    <WipPopover>
-                        <Button variant="contained">Start</Button>
-                    </WipPopover>
-                </Box>
+                    <Box
+                        sx={{
+                            flexGrow: 1,
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                        }}
+                    >
+                        <WipPopover>
+                            <Button variant="contained">Start</Button>
+                        </WipPopover>
+                    </Box>
+                </Container>
                 <Footer />
             </Box>
         </>

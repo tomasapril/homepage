@@ -1,6 +1,9 @@
 import Box from "@mui/material/Box";
 import Footer from "./Footer";
 import Header from "./Header";
+import Grid from "@mui/material/Grid";
+import Container from "@mui/material/Container";
+import HomeTile from "./HomeTile";
 
 export default function Home() {
     return (
@@ -13,11 +16,12 @@ export default function Home() {
                 }}
             >
                 <Header title={"Home"} />
-                {/* TODO: choose home page design
-                 */}
-                {/* TODO: add home page content
-                 */}
-                <Box sx={{ flexGrow: 1 }}></Box>
+                <Container sx={{ flexGrow: 1 }}>
+                    <Grid container spacing={2} justifyContent="center">
+                        <HomeTile to={"/game"} title="Game" />
+                        <HomeTile to={"/under-construction"} title="Other" />
+                    </Grid>
+                </Container>
                 <Footer />
             </Box>
         </>
