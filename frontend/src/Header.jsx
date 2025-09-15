@@ -9,7 +9,7 @@ import WipPopover from "./WipPopover";
 export default function Header({ title }) {
     return (
         <>
-            <Box sx={{ p: 2, flexGrow: 1 }}>
+            <Box sx={{ p: 2 }}>
                 <AppBar>
                     <Toolbar>
                         <HeaderMenu />
