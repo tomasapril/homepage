@@ -5,6 +5,9 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import HeaderMenu from "./HeaderMenu";
 import WipPopover from "./WipPopover";
+import HomeIcon from "@mui/icons-material/Home";
+import IconButton from "@mui/material/IconButton";
+import { Link } from "react-router";
 
 export default function Header({ title }) {
     return (
@@ -13,8 +16,15 @@ export default function Header({ title }) {
                 <AppBar>
                     <Toolbar>
                         <HeaderMenu />
-                        {/* TODO: add home button
-                         */}
+                        <IconButton
+                            size="large"
+                            color="inherit"
+                            sx={{ mr: 2 }}
+                            component={Link}
+                            to="/home"
+                        >
+                            <HomeIcon />
+                        </IconButton>
                         <Typography variant="h6" sx={{ flexGrow: 1 }}>
                             {title ? title : "Tomas April"}
                         </Typography>

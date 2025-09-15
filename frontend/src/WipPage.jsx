@@ -17,7 +17,7 @@ export default function WipPage() {
                     color: "warning.contrastText",
                 }}
             >
-                <Header title={"Home"} />
+                <Header title="WIP" />
                 <Container
                     sx={{
                         flexGrow: 1,
