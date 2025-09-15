@@ -3,6 +3,7 @@ import Header from "./Header";
 import Box from "@mui/material/Box";
 import WipPopover from "./WipPopover";
 import Button from "@mui/material/Button";
+import Footer from "./Footer";
 
 export default function Game() {
     return (
@@ -30,6 +31,7 @@ export default function Game() {
                         <Button variant="contained">Start</Button>
                     </WipPopover>
                 </Box>
+                <Footer />
             </Box>
         </>
     );
