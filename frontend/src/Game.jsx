@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 export default function Game() {
     return (
         <>
-            <Header />
+            <Header title={"Game"} />
             <Box
                 sx={{
                     display: "flex",

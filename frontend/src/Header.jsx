@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import HeaderMenu from "./HeaderMenu";
 
-export default function Header() {
+export default function Header({ title }) {
     return (
         <>
             <Box sx={{ p: 2, flexGrow: 1 }}>
@@ -13,9 +13,7 @@ export default function Header() {
                     <Toolbar>
                         <HeaderMenu />
                         <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                            Tomas April
-                            {/* TODO: make dynamic (page title)
-                             */}
+                            {title ? title : "Tomas April"}
                         </Typography>
                         <Button color="inherit">Login</Button>
                         {/* TODO: add WIP popup
