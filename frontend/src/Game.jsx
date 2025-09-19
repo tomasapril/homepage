@@ -5,6 +5,7 @@ import WipPopover from "./WipPopover";
 import Button from "@mui/material/Button";
 import Footer from "./Footer";
 import Container from "@mui/material/Container";
+import { Link, Outlet } from "react-router";
 
 export default function Game() {
     return (
@@ -32,9 +33,7 @@ export default function Game() {
                             alignItems: "center",
                         }}
                     >
-                        <WipPopover>
-                            <Button variant="contained">Start</Button>
-                        </WipPopover>
+                        <Outlet />
                     </Box>
                 </Container>
                 <Footer />
