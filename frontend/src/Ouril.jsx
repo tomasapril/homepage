@@ -10,11 +10,12 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
     ]);
 
     const [activePlayer, setActivePlayer] = useState(p1);
+    const [scores, setScores] = useState([0, 0]);
 
     function moveSeeds([side, place]) {
         console.log("Side: " + side);
         console.log("Place: " + place);
-        const flatBoard = board.flat();
+        let flatBoard = board.flat();
         const pos = side * 6 + place;
         // TODO: validate move
         const numberOfSeeds = flatBoard[pos];
@@ -24,7 +25,24 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
             flatBoard[i % flatBoard.length]++;
         }
         // TODO: eat the children (capture seeds)
-        return reshape(flatBoard);
+        const [newFlatBoard, eaten] = eat(flatBoard, pos + numberOfSeeds);
+        setScores(
+            activePlayer == p1
+                ? [scores[0] + eaten, scores[1]]
+                : [scores[0], scores[1] + eaten]
+        );
+        return reshape(newFlatBoard);
+    }
+
+    function eat(flatBoard, pos, eaten = 0) {
+        if (flatBoard[pos] >= 2 && flatBoard[pos] <= 3) {
+            eaten += flatBoard[pos];
+            flatBoard[pos] = 0;
+            const nextPos = (pos - 1 + flatBoard.length) % flatBoard.length;
+            eat(flatBoard, nextPos, eaten);
+        } else {
+            return [flatBoard, eaten];
+        }
     }
 
     function reshape(flatBoard) {
