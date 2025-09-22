@@ -81,7 +81,6 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
     }
 
     function eat(flatBoard, side, pos, eaten = 0) {
-        // TODO: only eat from opponent's side
         if (
             flatBoard[pos] >= 2 &&
             flatBoard[pos] <= 3 &&
