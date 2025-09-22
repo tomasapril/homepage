@@ -1,18 +1,29 @@
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import { useState } from "react";
 
 export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
     // TODO: remove console.log()
 
-    const [board, setBoard] = useState([
+    const initBoard = [
         [4, 4, 4, 4, 4, 4],
         [4, 4, 4, 4, 4, 4],
-    ]);
+    ];
+
+    const [board, setBoard] = useState(initBoard);
 
     const [activePlayer, setActivePlayer] = useState(p1);
     const [scores, setScores] = useState([0, 0]);
     const [winner, setWinner] = useState();
+
+    function handleRestart() {
+        setBoard(initBoard);
+        setScores([0, 0]);
+        setActivePlayer(p1);
+        setWinner(undefined);
+    }
 
     function gameOverCheck(scores, board, nextPlayer) {
         let hasWinner = false;
@@ -130,25 +141,62 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
 
     return (
         <>
-            {winner &&
-                (winner == "draw"
-                    ? "The game finished as a draw!"
-                    : winner + " has won the game!")}
-            {!winner && "The game is ongoing."}
-            <Container>
-                <Button onClick={() => play([0, 0])}>Play</Button>
-                <Button onClick={() => play([0, 1])}>Play</Button>
-                <Button onClick={() => play([0, 2])}>Play</Button>
-                <Button onClick={() => play([0, 3])}>Play</Button>
-                <Button onClick={() => play([0, 4])}>Play</Button>
-                <Button onClick={() => play([0, 5])}>Play</Button>
-                <Button onClick={() => play([1, 0])}>Play</Button>
-                <Button onClick={() => play([1, 1])}>Play</Button>
-                <Button onClick={() => play([1, 2])}>Play</Button>
-                <Button onClick={() => play([1, 3])}>Play</Button>
-                <Button onClick={() => play([1, 4])}>Play</Button>
-                <Button onClick={() => play([1, 5])}>Play</Button>
-            </Container>
+            <Stack spacing={4} alignItems="center">
+                <Typography variant="body1">
+                    {winner &&
+                        (winner == "draw"
+                            ? "The game finished as a draw!"
+                            : winner + " has won the game!")}
+                    {!winner && "The game is ongoing."}
+                </Typography>
+                <Stack direction="row" spacing={1}>
+                    <Button variant="contained" onClick={() => play([1, 5])}>
+                        {board[1][5]}
+                    </Button>
+                    <Button variant="contained" onClick={() => play([1, 4])}>
+                        {board[1][4]}
+                    </Button>
+                    <Button variant="contained" onClick={() => play([1, 3])}>
+                        {board[1][3]}
+                    </Button>
+                    <Button variant="contained" onClick={() => play([1, 2])}>
+                        {board[1][2]}
+                    </Button>
+                    <Button variant="contained" onClick={() => play([1, 1])}>
+                        {board[1][1]}
+                    </Button>
+                    <Button variant="contained" onClick={() => play([1, 0])}>
+                        {board[1][0]}
+                    </Button>
+                </Stack>
+                <Stack direction="row" spacing={1}>
+                    <Button variant="contained" onClick={() => play([0, 0])}>
+                        {board[0][0]}
+                    </Button>
+                    <Button variant="contained" onClick={() => play([0, 1])}>
+                        {board[0][1]}
+                    </Button>
+                    <Button variant="contained" onClick={() => play([0, 2])}>
+                        {board[0][2]}
+                    </Button>
+                    <Button variant="contained" onClick={() => play([0, 3])}>
+                        {board[0][3]}
+                    </Button>
+                    <Button variant="contained" onClick={() => play([0, 4])}>
+                        {board[0][4]}
+                    </Button>
+                    <Button variant="contained" onClick={() => play([0, 5])}>
+                        {board[0][5]}
+                    </Button>
+                </Stack>
+                <Button
+                    variant="contained"
+                    sx={{ bgcolor: "primary.dark" }}
+                    onClick={handleRestart}
+                >
+                    Restart
+                </Button>
+            </Stack>
         </>
     );
 }
