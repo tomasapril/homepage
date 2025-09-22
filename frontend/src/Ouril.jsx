@@ -12,19 +12,34 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
     const [activePlayer, setActivePlayer] = useState(p1);
     const [scores, setScores] = useState([0, 0]);
 
+    function validateMove([side, place]) {
+        const playerSide = activePlayer == p1 ? 0 : 1;
+        const opponentSide = (playerSide + 1) % 2;
+        if (side != playerSide) {
+            return false;
+        }
+        if (board[side][place] == 0) {
+            return false;
+        }
+        if (board[opponentSide].every((x) => x == 0)) {
+            if (board[side][place] < board[side].length - place) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     function moveSeeds([side, place]) {
         console.log("Side: " + side);
         console.log("Place: " + place);
         let flatBoard = board.flat();
         const pos = side * 6 + place;
-        // TODO: validate move
         const numberOfSeeds = flatBoard[pos];
         console.log(numberOfSeeds);
         flatBoard[pos] = 0;
         for (let i = pos + 1; i <= pos + numberOfSeeds; i++) {
             flatBoard[i % flatBoard.length]++;
         }
-        // TODO: eat the children (capture seeds)
         const [newFlatBoard, eaten] = eat(flatBoard, pos + numberOfSeeds);
         setScores(
             activePlayer == p1
@@ -59,6 +74,11 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
     }
 
     function play(pos = [0, 0]) {
+        const moveIsValid = validateMove(pos);
+        if (!moveIsValid) {
+            alert("Invalid move. \n" + activePlayer + ", play another move.");
+            return;
+        }
         const newBoard = moveSeeds(pos);
         setBoard(newBoard);
         visualize(newBoard);
