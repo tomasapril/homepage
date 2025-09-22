@@ -112,7 +112,11 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
         setBoard(newBoard);
         visualize(newBoard);
         if (isGameOver()) {
-            alert(winner + " has won the game!");
+            if (winner) {
+                alert(winner + " has won the game!");
+            } else {
+                alert("The game has ended in a draw!");
+            }
         }
         console.log(activePlayer + " has played.");
         setActivePlayer(activePlayer == p1 ? p2 : p1);
