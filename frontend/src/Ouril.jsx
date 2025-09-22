@@ -34,7 +34,7 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
     }
 
     function hasValidMoves(side) {
-        board[side].forEach((_, i) => validateMove([side, i]));
+        return board[side].some((_, i) => validateMove([side, i]));
     }
 
     function validateMove([side, place]) {
