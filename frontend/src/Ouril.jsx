@@ -42,7 +42,7 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
 
     function validateMove([side, place], board, activePlayer) {
         const playerSide = activePlayer == p1 ? 0 : 1;
-        const opponentSide = (playerSide + 1) % 2;
+        const opponentSide = 1 - playerSide;
         if (side != playerSide) {
             return false;
         }
@@ -58,7 +58,6 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
     }
 
     function moveSeeds([side, place], board) {
-        // TODO: implement skipping of own house
         console.log("Side: " + side);
         console.log("Place: " + place);
         let flatBoard = board.flat();
@@ -71,6 +70,7 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
         }
         const [newFlatBoard, eaten] = eat(
             flatBoard,
+            side,
             (pos + numberOfSeeds) % flatBoard.length
         );
         const newScores =
@@ -80,13 +80,17 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
         return [newScores, reshape(newFlatBoard)];
     }
 
-    function eat(flatBoard, pos, eaten = 0) {
+    function eat(flatBoard, side, pos, eaten = 0) {
         // TODO: only eat from opponent's side
-        if (flatBoard[pos] >= 2 && flatBoard[pos] <= 3) {
+        if (
+            flatBoard[pos] >= 2 &&
+            flatBoard[pos] <= 3 &&
+            Math.floor(pos / (flatBoard.length / 2)) != side
+        ) {
             eaten += flatBoard[pos];
             flatBoard[pos] = 0;
             const nextPos = (pos - 1 + flatBoard.length) % flatBoard.length;
-            return eat(flatBoard, nextPos, eaten);
+            return eat(flatBoard, side, nextPos, eaten);
         } else {
             return [flatBoard, eaten];
         }
