@@ -23,7 +23,7 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
         } else if (maxScore > 24) {
             hasWinner = true;
         } else if (
-            (!hasValidMoves(nextPlayer == p1 ? 0 : 1), board, nextPlayer)
+            !hasValidMoves(nextPlayer == p1 ? 0 : 1, board, nextPlayer)
         ) {
             hasWinner = true;
         }
@@ -105,7 +105,9 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
     }
 
     function play(pos = [0, 0]) {
-        // TODO: prevent playing when game over
+        if (winner) {
+            alert("The game is over. \n No more moves can be made.");
+        }
         const moveIsValid = validateMove(pos, board, activePlayer);
         if (!moveIsValid) {
             alert("Invalid move. \n" + activePlayer + ", play another move.");
@@ -118,8 +120,8 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
         console.log(activePlayer + " has played.");
         const nextPlayer = activePlayer == p1 ? p2 : p1;
         setActivePlayer(nextPlayer);
-        const winner = gameOverCheck(newScores, newBoard, nextPlayer);
-        if (winner) setWinner(winner);
+        const newWinner = gameOverCheck(newScores, newBoard, nextPlayer);
+        if (newWinner) setWinner(newWinner);
     }
 
     return (
