@@ -14,30 +14,33 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
     const [scores, setScores] = useState([0, 0]);
     const [winner, setWinner] = useState();
 
-    function isGameOver() {
+    function gameOverCheck(scores, board, nextPlayer) {
         let hasWinner = false;
-        let gameOver = false;
+        let winner = undefined;
         const maxScore = Math.max(...scores);
         if (scores[0] == 24 && scores[1] == 24) {
-            gameOver = true;
+            winner = "draw";
         } else if (maxScore > 24) {
             hasWinner = true;
-        } else if (!hasValidMoves(activePlayer == p1 ? 0 : 1)) {
+        } else if (
+            (!hasValidMoves(nextPlayer == p1 ? 0 : 1), board, nextPlayer)
+        ) {
             hasWinner = true;
         }
         if (hasWinner) {
             const winnerIndex = scores.findIndex((x) => x == maxScore);
-            setWinner(winnerIndex == 0 ? p1 : p2);
-            gameOver = true;
+            winner = winnerIndex == 0 ? p1 : p2;
         }
-        return gameOver;
+        return winner;
     }
 
-    function hasValidMoves(side) {
-        return board[side].some((_, i) => validateMove([side, i]));
+    function hasValidMoves(side, board, player) {
+        return board[side].some((_, i) =>
+            validateMove([side, i], board, player)
+        );
     }
 
-    function validateMove([side, place]) {
+    function validateMove([side, place], board, activePlayer) {
         const playerSide = activePlayer == p1 ? 0 : 1;
         const opponentSide = (playerSide + 1) % 2;
         if (side != playerSide) {
@@ -54,7 +57,7 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
         return true;
     }
 
-    function moveSeeds([side, place]) {
+    function moveSeeds([side, place], board) {
         // TODO: implement skipping of own house
         console.log("Side: " + side);
         console.log("Place: " + place);
@@ -70,12 +73,11 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
             flatBoard,
             (pos + numberOfSeeds) % flatBoard.length
         );
-        setScores(
+        const newScores =
             activePlayer == p1
                 ? [scores[0] + eaten, scores[1]]
-                : [scores[0], scores[1] + eaten]
-        );
-        return reshape(newFlatBoard);
+                : [scores[0], scores[1] + eaten];
+        return [newScores, reshape(newFlatBoard)];
     }
 
     function eat(flatBoard, pos, eaten = 0) {
@@ -103,27 +105,30 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
     }
 
     function play(pos = [0, 0]) {
-        const moveIsValid = validateMove(pos);
+        // TODO: prevent playing when game over
+        const moveIsValid = validateMove(pos, board, activePlayer);
         if (!moveIsValid) {
             alert("Invalid move. \n" + activePlayer + ", play another move.");
             return;
         }
-        const newBoard = moveSeeds(pos);
+        const [newScores, newBoard] = moveSeeds(pos, board);
+        setScores(newScores);
         setBoard(newBoard);
         visualize(newBoard);
-        if (isGameOver()) {
-            if (winner) {
-                alert(winner + " has won the game!");
-            } else {
-                alert("The game has ended in a draw!");
-            }
-        }
         console.log(activePlayer + " has played.");
-        setActivePlayer(activePlayer == p1 ? p2 : p1);
+        const nextPlayer = activePlayer == p1 ? p2 : p1;
+        setActivePlayer(nextPlayer);
+        const winner = gameOverCheck(newScores, newBoard, nextPlayer);
+        if (winner) setWinner(winner);
     }
 
     return (
         <>
+            {winner &&
+                (winner == "draw"
+                    ? "The game finished as a draw!"
+                    : winner + " has won the game!")}
+            {!winner && "The game is ongoing."}
             <Container>
                 <Button onClick={() => play([0, 0])}>Play</Button>
                 <Button onClick={() => play([0, 1])}>Play</Button>
