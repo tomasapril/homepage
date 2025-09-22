@@ -39,7 +39,7 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
             eaten += flatBoard[pos];
             flatBoard[pos] = 0;
             const nextPos = (pos - 1 + flatBoard.length) % flatBoard.length;
-            eat(flatBoard, nextPos, eaten);
+            return eat(flatBoard, nextPos, eaten);
         } else {
             return [flatBoard, eaten];
         }
