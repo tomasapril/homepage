@@ -12,6 +12,30 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
 
     const [activePlayer, setActivePlayer] = useState(p1);
     const [scores, setScores] = useState([0, 0]);
+    const [winner, setWinner] = useState();
+
+    function isGameOver() {
+        let hasWinner = false;
+        let gameOver = false;
+        const maxScore = Math.max(...scores);
+        if (scores[0] == 24 && scores[1] == 24) {
+            gameOver = true;
+        } else if (maxScore > 24) {
+            hasWinner = true;
+        } else if (!hasValidMoves(activePlayer == p1 ? 0 : 1)) {
+            hasWinner = true;
+        }
+        if (hasWinner) {
+            const winnerIndex = scores.findIndex((x) => x == maxScore);
+            setWinner(winnerIndex == 0 ? p1 : p2);
+            gameOver = true;
+        }
+        return gameOver;
+    }
+
+    function hasValidMoves(side) {
+        board[side].forEach((_, i) => validateMove([side, i]));
+    }
 
     function validateMove([side, place]) {
         const playerSide = activePlayer == p1 ? 0 : 1;
@@ -31,6 +55,7 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
     }
 
     function moveSeeds([side, place]) {
+        // TODO: implement skipping of own house
         console.log("Side: " + side);
         console.log("Place: " + place);
         let flatBoard = board.flat();
@@ -54,6 +79,7 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
     }
 
     function eat(flatBoard, pos, eaten = 0) {
+        // TODO: only eat from opponent's side
         if (flatBoard[pos] >= 2 && flatBoard[pos] <= 3) {
             eaten += flatBoard[pos];
             flatBoard[pos] = 0;
@@ -85,6 +111,9 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
         const newBoard = moveSeeds(pos);
         setBoard(newBoard);
         visualize(newBoard);
+        if (isGameOver()) {
+            alert(winner + " has won the game!");
+        }
         console.log(activePlayer + " has played.");
         setActivePlayer(activePlayer == p1 ? p2 : p1);
     }
