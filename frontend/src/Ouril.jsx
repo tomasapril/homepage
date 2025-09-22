@@ -1,4 +1,5 @@
 import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
 import { useState } from "react";
 
 export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
@@ -40,7 +41,10 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
         for (let i = pos + 1; i <= pos + numberOfSeeds; i++) {
             flatBoard[i % flatBoard.length]++;
         }
-        const [newFlatBoard, eaten] = eat(flatBoard, pos + numberOfSeeds);
+        const [newFlatBoard, eaten] = eat(
+            flatBoard,
+            (pos + numberOfSeeds) % flatBoard.length
+        );
         setScores(
             activePlayer == p1
                 ? [scores[0] + eaten, scores[1]]
@@ -70,7 +74,6 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
     function visualize(boardToShow) {
         console.log([...boardToShow[1]].reverse());
         console.log(boardToShow[0]);
-        // TODO: make visualization better
     }
 
     function play(pos = [0, 0]) {
@@ -88,13 +91,20 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
 
     return (
         <>
-            <Button onClick={() => play([0, 0])}>Play</Button>
-            <Button onClick={() => play([0, 1])}>Play</Button>
-            <Button onClick={() => play([0, 2])}>Play</Button>
-            <Button onClick={() => play([0, 3])}>Play</Button>
-            <Button onClick={() => play([0, 4])}>Play</Button>
-            <Button onClick={() => play([0, 5])}>Play</Button>
-            {/* TODO: add all squares for board */}
+            <Container>
+                <Button onClick={() => play([0, 0])}>Play</Button>
+                <Button onClick={() => play([0, 1])}>Play</Button>
+                <Button onClick={() => play([0, 2])}>Play</Button>
+                <Button onClick={() => play([0, 3])}>Play</Button>
+                <Button onClick={() => play([0, 4])}>Play</Button>
+                <Button onClick={() => play([0, 5])}>Play</Button>
+                <Button onClick={() => play([1, 0])}>Play</Button>
+                <Button onClick={() => play([1, 1])}>Play</Button>
+                <Button onClick={() => play([1, 2])}>Play</Button>
+                <Button onClick={() => play([1, 3])}>Play</Button>
+                <Button onClick={() => play([1, 4])}>Play</Button>
+                <Button onClick={() => play([1, 5])}>Play</Button>
+            </Container>
         </>
     );
 }
