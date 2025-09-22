@@ -110,6 +110,7 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
     function play(pos = [0, 0]) {
         if (winner) {
             alert("The game is over. \n No more moves can be made.");
+            return;
         }
         const moveIsValid = validateMove(pos, board, activePlayer);
         if (!moveIsValid) {
