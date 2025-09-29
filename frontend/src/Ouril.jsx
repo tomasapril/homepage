@@ -3,6 +3,9 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import OurilHouse from "./OurilHouse";
+import { Box } from "@mui/material";
+
+// TODO: check for draw functionality
 
 export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
     const initBoard = [
@@ -130,13 +133,6 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
     return (
         <>
             <Stack spacing={4} alignItems="center">
-                <Typography variant="body1">
-                    {winner &&
-                        (winner == "draw"
-                            ? "The game finished as a draw!"
-                            : winner + " has won the game!")}
-                    {!winner && `It's ${activePlayer}'s turn.`}
-                </Typography>
                 <Stack
                     alignItems="center"
                     sx={{
@@ -195,6 +191,35 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
                     Restart
                 </Button>
             </Stack>
+            {/* TODO: refactor win screen
+             */}
+            {winner && (
+                <Box
+                    sx={{
+                        position: "absolute",
+                        inset: 0,
+                        backgroundColor: "rgba(0, 0, 0, 0.81)",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "white",
+                    }}
+                >
+                    <Typography variant="h3">
+                        {winner == "draw"
+                            ? "It's a draw!"
+                            : winner + " wins! 🎉"}
+                    </Typography>
+                    <Button
+                        sx={{ mt: 2 }}
+                        variant="contained"
+                        onClick={handleRestart}
+                    >
+                        Close
+                    </Button>
+                </Box>
+            )}
         </>
     );
 }
