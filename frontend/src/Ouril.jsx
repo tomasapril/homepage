@@ -141,51 +141,136 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
 
     return (
         <>
+            {/* TODO: define board iteratively */}
             <Stack spacing={4} alignItems="center">
                 <Typography variant="body1">
                     {winner &&
                         (winner == "draw"
                             ? "The game finished as a draw!"
                             : winner + " has won the game!")}
-                    {!winner && "The game is ongoing."}
+                    {!winner && `It's ${activePlayer}'s turn.`}
                 </Typography>
                 <Stack direction="row" spacing={1}>
-                    <Button variant="contained" onClick={() => play([1, 5])}>
+                    <Button
+                        variant="contained"
+                        sx={{
+                            bgcolor:
+                                activePlayer == p1 ? "grey" : "primary.main",
+                        }}
+                        onClick={() => play([1, 5])}
+                    >
                         {board[1][5]}
                     </Button>
-                    <Button variant="contained" onClick={() => play([1, 4])}>
+                    <Button
+                        variant="contained"
+                        sx={{
+                            bgcolor:
+                                activePlayer == p1 ? "grey" : "primary.main",
+                        }}
+                        onClick={() => play([1, 4])}
+                    >
                         {board[1][4]}
                     </Button>
-                    <Button variant="contained" onClick={() => play([1, 3])}>
+                    <Button
+                        variant="contained"
+                        sx={{
+                            bgcolor:
+                                activePlayer == p1 ? "grey" : "primary.main",
+                        }}
+                        onClick={() => play([1, 3])}
+                    >
                         {board[1][3]}
                     </Button>
-                    <Button variant="contained" onClick={() => play([1, 2])}>
+                    <Button
+                        variant="contained"
+                        sx={{
+                            bgcolor:
+                                activePlayer == p1 ? "grey" : "primary.main",
+                        }}
+                        onClick={() => play([1, 2])}
+                    >
                         {board[1][2]}
                     </Button>
-                    <Button variant="contained" onClick={() => play([1, 1])}>
+                    <Button
+                        variant="contained"
+                        sx={{
+                            bgcolor:
+                                activePlayer == p1 ? "grey" : "primary.main",
+                        }}
+                        onClick={() => play([1, 1])}
+                    >
                         {board[1][1]}
                     </Button>
-                    <Button variant="contained" onClick={() => play([1, 0])}>
+                    <Button
+                        variant="contained"
+                        sx={{
+                            bgcolor:
+                                activePlayer == p1 ? "grey" : "primary.main",
+                        }}
+                        onClick={() => play([1, 0])}
+                    >
                         {board[1][0]}
                     </Button>
                 </Stack>
                 <Stack direction="row" spacing={1}>
-                    <Button variant="contained" onClick={() => play([0, 0])}>
+                    <Button
+                        variant="contained"
+                        sx={{
+                            bgcolor:
+                                activePlayer == p2 ? "grey" : "primary.main",
+                        }}
+                        onClick={() => play([0, 0])}
+                    >
                         {board[0][0]}
                     </Button>
-                    <Button variant="contained" onClick={() => play([0, 1])}>
+                    <Button
+                        variant="contained"
+                        sx={{
+                            bgcolor:
+                                activePlayer == p2 ? "grey" : "primary.main",
+                        }}
+                        onClick={() => play([0, 1])}
+                    >
                         {board[0][1]}
                     </Button>
-                    <Button variant="contained" onClick={() => play([0, 2])}>
+                    <Button
+                        variant="contained"
+                        sx={{
+                            bgcolor:
+                                activePlayer == p2 ? "grey" : "primary.main",
+                        }}
+                        onClick={() => play([0, 2])}
+                    >
                         {board[0][2]}
                     </Button>
-                    <Button variant="contained" onClick={() => play([0, 3])}>
+                    <Button
+                        variant="contained"
+                        sx={{
+                            bgcolor:
+                                activePlayer == p2 ? "grey" : "primary.main",
+                        }}
+                        onClick={() => play([0, 3])}
+                    >
                         {board[0][3]}
                     </Button>
-                    <Button variant="contained" onClick={() => play([0, 4])}>
+                    <Button
+                        variant="contained"
+                        sx={{
+                            bgcolor:
+                                activePlayer == p2 ? "grey" : "primary.main",
+                        }}
+                        onClick={() => play([0, 4])}
+                    >
                         {board[0][4]}
                     </Button>
-                    <Button variant="contained" onClick={() => play([0, 5])}>
+                    <Button
+                        variant="contained"
+                        sx={{
+                            bgcolor:
+                                activePlayer == p2 ? "grey" : "primary.main",
+                        }}
+                        onClick={() => play([0, 5])}
+                    >
                         {board[0][5]}
                     </Button>
                 </Stack>
