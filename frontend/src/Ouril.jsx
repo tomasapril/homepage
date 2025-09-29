@@ -136,7 +136,19 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
                             : winner + " has won the game!")}
                     {!winner && `It's ${activePlayer}'s turn.`}
                 </Typography>
-                <Stack alignItems="center">
+                <Stack
+                    alignItems="center"
+                    sx={{
+                        p: 1,
+                        borderRadius: "15%",
+                        bgcolor:
+                            activePlayer == p2 ? "primary.light" : undefined,
+                        color:
+                            activePlayer == p2
+                                ? "primary.contrastText"
+                                : "default",
+                    }}
+                >
                     <Typography variant="h6">{p2}</Typography>
                     <Typography variant="h5">{scores[1]}</Typography>
                 </Stack>
@@ -172,7 +184,19 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
                         </Button>
                     ))}
                 </Stack>
-                <Stack alignItems="center">
+                <Stack
+                    alignItems="center"
+                    sx={{
+                        p: 1,
+                        borderRadius: "15%",
+                        bgcolor:
+                            activePlayer == p1 ? "primary.light" : undefined,
+                        color:
+                            activePlayer == p1
+                                ? "primary.contrastText"
+                                : "default",
+                    }}
+                >
                     <Typography variant="h6">{p1}</Typography>
                     <Typography variant="h5">{scores[0]}</Typography>
                 </Stack>
