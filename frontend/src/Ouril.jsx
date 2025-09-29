@@ -2,6 +2,7 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
+import OurilHouse from "./OurilHouse";
 
 export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
     const initBoard = [
@@ -154,34 +155,20 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
                 </Stack>
                 <Stack direction="row" spacing={1}>
                     {[...Array(6)].map((_, i) => (
-                        <Button
-                            variant="contained"
-                            sx={{
-                                bgcolor:
-                                    activePlayer == p1
-                                        ? "grey"
-                                        : "primary.main",
-                            }}
+                        <OurilHouse
+                            key={"1_" + (5 - i)}
+                            seeds={board[1][5 - i]}
                             onClick={() => play([1, 5 - i])}
-                        >
-                            {board[1][5 - i]}
-                        </Button>
+                        ></OurilHouse>
                     ))}
                 </Stack>
                 <Stack direction="row" spacing={1}>
                     {[...Array(6)].map((_, i) => (
-                        <Button
-                            variant="contained"
-                            sx={{
-                                bgcolor:
-                                    activePlayer == p2
-                                        ? "grey"
-                                        : "primary.main",
-                            }}
+                        <OurilHouse
+                            key={"0_" + i}
+                            seeds={board[0][i]}
                             onClick={() => play([0, i])}
-                        >
-                            {board[0][i]}
-                        </Button>
+                        ></OurilHouse>
                     ))}
                 </Stack>
                 <Stack
