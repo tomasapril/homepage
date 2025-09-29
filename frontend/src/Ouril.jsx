@@ -128,10 +128,6 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
 
     return (
         <>
-            <Stack alignItems="center" justifyContent="start" padding={6}>
-                <Typography variant="h6">{p1}</Typography>
-                <Typography variant="h5">{scores[0]}</Typography>
-            </Stack>
             <Stack spacing={4} alignItems="center">
                 <Typography variant="body1">
                     {winner &&
@@ -140,6 +136,10 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
                             : winner + " has won the game!")}
                     {!winner && `It's ${activePlayer}'s turn.`}
                 </Typography>
+                <Stack alignItems="center">
+                    <Typography variant="h6">{p2}</Typography>
+                    <Typography variant="h5">{scores[1]}</Typography>
+                </Stack>
                 <Stack direction="row" spacing={1}>
                     {[...Array(6)].map((_, i) => (
                         <Button
@@ -172,6 +172,10 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
                         </Button>
                     ))}
                 </Stack>
+                <Stack alignItems="center">
+                    <Typography variant="h6">{p1}</Typography>
+                    <Typography variant="h5">{scores[0]}</Typography>
+                </Stack>
                 <Button
                     variant="contained"
                     sx={{ bgcolor: "primary.dark" }}
@@ -179,10 +183,6 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
                 >
                     Restart
                 </Button>
-            </Stack>
-            <Stack alignItems="center" justifyContent="start" padding={6}>
-                <Typography variant="h6">{p2}</Typography>
-                <Typography variant="h5">{scores[1]}</Typography>
             </Stack>
         </>
     );
