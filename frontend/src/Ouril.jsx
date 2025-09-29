@@ -142,6 +142,10 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
     return (
         <>
             {/* TODO: define board iteratively */}
+            <Stack alignItems="center" justifyContent="start" padding={6}>
+                <Typography variant="h6">{p1}</Typography>
+                <Typography variant="h5">{scores[0]}</Typography>
+            </Stack>
             <Stack spacing={4} alignItems="center">
                 <Typography variant="body1">
                     {winner &&
@@ -281,6 +285,10 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
                 >
                     Restart
                 </Button>
+            </Stack>
+            <Stack alignItems="center" justifyContent="start" padding={6}>
+                <Typography variant="h6">{p2}</Typography>
+                <Typography variant="h5">{scores[1]}</Typography>
             </Stack>
         </>
     );
