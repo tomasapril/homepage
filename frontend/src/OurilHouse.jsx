@@ -2,6 +2,7 @@ import React from "react";
 import { ButtonBase } from "@mui/material";
 
 // TODO: refactor this component
+// TODO: check why seeds exceed border
 // TODO: grey out the house when not on turn
 
 function generatePositions({
@@ -85,6 +86,7 @@ export default function OurilHouse({ seeds, onClick }) {
                 border: "2px solid #333",
                 backgroundColor: "#f5f5f5",
                 position: "relative",
+                overflow: "hidden",
             }}
         >
             {positions.map((pos, i) => (
