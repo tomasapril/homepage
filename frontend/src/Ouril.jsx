@@ -4,8 +4,6 @@ import Typography from "@mui/material/Typography";
 import { useState } from "react";
 
 export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
-    // TODO: remove console.log()
-
     const initBoard = [
         [4, 4, 4, 4, 4, 4],
         [4, 4, 4, 4, 4, 4],
@@ -68,12 +66,9 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
     }
 
     function moveSeeds([side, place], board) {
-        console.log("Side: " + side);
-        console.log("Place: " + place);
         let flatBoard = board.flat();
         const pos = side * 6 + place;
         const numberOfSeeds = flatBoard[pos];
-        console.log(numberOfSeeds);
         flatBoard[pos] = 0;
         for (let i = pos + 1; i <= pos + numberOfSeeds; i++) {
             flatBoard[i % flatBoard.length]++;
@@ -112,11 +107,6 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
         return shapedBoard;
     }
 
-    function visualize(boardToShow) {
-        console.log([...boardToShow[1]].reverse());
-        console.log(boardToShow[0]);
-    }
-
     function play(pos = [0, 0]) {
         if (winner) {
             alert("The game is over. \n No more moves can be made.");
@@ -130,8 +120,6 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
         const [newScores, newBoard] = moveSeeds(pos, board);
         setScores(newScores);
         setBoard(newBoard);
-        visualize(newBoard);
-        console.log(activePlayer + " has played.");
         const nextPlayer = activePlayer == p1 ? p2 : p1;
         setActivePlayer(nextPlayer);
         const newWinner = gameOverCheck(newScores, newBoard, nextPlayer);
