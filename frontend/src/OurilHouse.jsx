@@ -2,7 +2,6 @@ import React from "react";
 import { ButtonBase } from "@mui/material";
 
 // TODO: refactor this component
-// TODO: check why seeds exceed border
 // TODO: grey out the house when not on turn
 
 function generatePositions({
@@ -13,7 +12,7 @@ function generatePositions({
     maxTries = 100,
 }) {
     const positions = [];
-    const maxRadius = pitSize / 2 - seedSize / 2; // center radius available
+    const maxRadius = pitSize / 2 - seedSize / 2 - 4; // center radius available
     const center = pitSize / 2;
 
     for (let i = 0; i < count; i++) {
@@ -86,7 +85,6 @@ export default function OurilHouse({ seeds, onClick }) {
                 border: "2px solid #333",
                 backgroundColor: "#f5f5f5",
                 position: "relative",
-                overflow: "hidden",
             }}
         >
             {positions.map((pos, i) => (
