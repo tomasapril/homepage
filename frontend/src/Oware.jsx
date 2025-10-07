@@ -8,7 +8,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import InfoDialog from "./InfoDialog";
 
 // TODO: refactor valid move into state
-// TODO: rename to Oware
+// TODO: remove all unused imports everywhere
 
 export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
     const [info, setInfo] = useState(false);
@@ -228,35 +228,13 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
                     Restart
                 </Button>
             </Stack>
-            {/* TODO: refactor win screen
-             */}
-            {winner && (
-                <Box
-                    sx={{
-                        position: "absolute",
-                        inset: 0,
-                        backgroundColor: "rgba(0, 0, 0, 0.81)",
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        color: "white",
-                    }}
-                >
-                    <Typography variant="h3">
-                        {winner == "draw"
-                            ? "It's a draw!"
-                            : winner + " wins! 🎉"}
-                    </Typography>
-                    <Button
-                        sx={{ mt: 2 }}
-                        variant="contained"
-                        onClick={handleRestart}
-                    >
-                        Close
-                    </Button>
-                </Box>
-            )}
+            <InfoDialog
+                title={winner == "draw" ? "It's a draw!" : winner + " wins! 🎉"}
+                open={winner}
+                handleClose={handleRestart}
+            >
+                Close this window to restart.
+            </InfoDialog>
         </>
     );
 }
