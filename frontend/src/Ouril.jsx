@@ -8,7 +8,6 @@ import InfoIcon from "@mui/icons-material/Info";
 import InfoDialog from "./InfoDialog";
 
 // TODO: refactor valid move into state
-// TODO: skip own house
 // TODO: rename to Oware
 
 export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
@@ -80,8 +79,14 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
         const pos = side * 6 + place;
         const numberOfSeeds = flatBoard[pos];
         flatBoard[pos] = 0;
-        for (let i = pos + 1; i <= pos + numberOfSeeds; i++) {
-            flatBoard[i % flatBoard.length]++;
+        let currentPos = pos;
+        let currentSeeds = numberOfSeeds;
+        while (currentSeeds > 0) {
+            currentPos = (currentPos + 1) % flatBoard.length;
+            if (currentPos != pos) {
+                flatBoard[currentPos]++;
+                currentSeeds--;
+            }
         }
         const [newFlatBoard, eaten] = eat(
             flatBoard,
