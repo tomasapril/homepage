@@ -6,6 +6,7 @@ import OurilHouse from "./OurilHouse";
 import { Box } from "@mui/material";
 
 // TODO: check for draw functionality
+// TODO: refactor valid move into state
 
 export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
     const initBoard = [
@@ -155,6 +156,7 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
                             key={"1_" + (5 - i)}
                             seeds={board[1][5 - i]}
                             onClick={() => play([1, 5 - i])}
+                            active={activePlayer == p2}
                         ></OurilHouse>
                     ))}
                 </Stack>
@@ -164,6 +166,7 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
                             key={"0_" + i}
                             seeds={board[0][i]}
                             onClick={() => play([0, i])}
+                            active={activePlayer == p1}
                         ></OurilHouse>
                     ))}
                 </Stack>

@@ -2,7 +2,6 @@ import React from "react";
 import { ButtonBase } from "@mui/material";
 
 // TODO: refactor this component
-// TODO: grey out the house when not on turn
 
 function generatePositions({
     count,
@@ -59,10 +58,18 @@ function generatePositions({
     return positions;
 }
 
-export default function OurilHouse({ seeds, onClick }) {
+export default function OurilHouse({ seeds, onClick, active }) {
     const pitSize = 60;
     const seedSize = 12;
     const minDistance = seedSize + 2; // required distance between seeds
+
+    const activeColor = "#f5f5f5";
+    const activeSeedColor = "saddlebrown";
+    const activeSeedBorder = "#552200";
+
+    const passiveColor = "#a3a3a3f5";
+    const passiveSeedColor = "#767676f5";
+    const passiveSeedBorder = "#464646ff";
 
     const positions = React.useMemo(
         () =>
@@ -83,7 +90,7 @@ export default function OurilHouse({ seeds, onClick }) {
                 height: pitSize,
                 borderRadius: "50%",
                 border: "2px solid #333",
-                backgroundColor: "#f5f5f5",
+                backgroundColor: active ? activeColor : passiveColor,
                 position: "relative",
             }}
         >
@@ -97,8 +104,12 @@ export default function OurilHouse({ seeds, onClick }) {
                         width: seedSize,
                         height: seedSize,
                         borderRadius: "50%",
-                        backgroundColor: "saddlebrown",
-                        border: "1px solid #552200",
+                        backgroundColor: active
+                            ? activeSeedColor
+                            : passiveSeedColor,
+                        border:
+                            "1px solid " +
+                            (active ? activeSeedBorder : passiveSeedBorder),
                         boxShadow: "1px 1px 3px rgba(0,0,0,0.4)",
                     }}
                 />
