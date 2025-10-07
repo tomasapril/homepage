@@ -3,10 +3,12 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import OurilHouse from "./OurilHouse";
-import { Box } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
+import InfoIcon from "@mui/icons-material/Info";
 
 // TODO: check for draw functionality
 // TODO: refactor valid move into state
+// TODO: skip own house
 
 export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
     const initBoard = [
@@ -133,6 +135,13 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
 
     return (
         <>
+            <IconButton
+                size="large"
+                color="primary"
+                sx={{ position: "absolute", top: 0, right: 0 }}
+            >
+                <InfoIcon />
+            </IconButton>
             <Stack spacing={4} alignItems="center">
                 <Stack
                     alignItems="center"

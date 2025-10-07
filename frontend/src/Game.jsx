@@ -31,6 +31,7 @@ export default function Game() {
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
+                            position: "relative",
                         }}
                     >
                         <Outlet />
