@@ -3,14 +3,17 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import OurilHouse from "./OurilHouse";
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, Link } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
+import InfoDialog from "./InfoDialog";
 
-// TODO: check for draw functionality
 // TODO: refactor valid move into state
 // TODO: skip own house
+// TODO: rename to Oware
 
 export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
+    const [info, setInfo] = useState(false);
+
     const initBoard = [
         [4, 4, 4, 4, 4, 4],
         [4, 4, 4, 4, 4, 4],
@@ -139,9 +142,26 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
                 size="large"
                 color="primary"
                 sx={{ position: "absolute", top: 0, right: 0 }}
+                onClick={() => setInfo(true)}
             >
                 <InfoIcon />
             </IconButton>
+            <InfoDialog
+                open={info}
+                title="Oware"
+                handleClose={() => setInfo(false)}
+            >
+                Information about the game, including the rules, can be found on{" "}
+                <Link
+                    href="https://en.wikipedia.org/wiki/Oware"
+                    underline="hover"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Wikipedia
+                </Link>
+                .
+            </InfoDialog>
             <Stack spacing={4} alignItems="center">
                 <Stack
                     alignItems="center"
