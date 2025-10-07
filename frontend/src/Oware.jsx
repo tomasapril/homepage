@@ -3,12 +3,11 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import OwareHouse from "./OwareHouse";
-import { Box, IconButton, Link } from "@mui/material";
+import { IconButton, Link } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import InfoDialog from "./InfoDialog";
 
 // TODO: refactor valid move into state
-// TODO: remove all unused imports everywhere
 
 export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
     const [info, setInfo] = useState(false);

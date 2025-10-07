@@ -1,11 +1,8 @@
-import Typography from "@mui/material/Typography";
 import Header from "./Header";
 import Box from "@mui/material/Box";
-import WipPopover from "./WipPopover";
-import Button from "@mui/material/Button";
 import Footer from "./Footer";
 import Container from "@mui/material/Container";
-import { Link, Outlet } from "react-router";
+import { Outlet } from "react-router";
 
 export default function Game() {
     return (
