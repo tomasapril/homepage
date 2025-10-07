@@ -2,7 +2,7 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
-import OurilHouse from "./OurilHouse";
+import OwareHouse from "./OwareHouse";
 import { Box, IconButton, Link } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import InfoDialog from "./InfoDialog";
@@ -10,7 +10,7 @@ import InfoDialog from "./InfoDialog";
 // TODO: refactor valid move into state
 // TODO: rename to Oware
 
-export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
+export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
     const [info, setInfo] = useState(false);
 
     const initBoard = [
@@ -186,22 +186,22 @@ export default function Ouril({ p1 = "Player 1", p2 = "Player 2" }) {
                 </Stack>
                 <Stack direction="row" spacing={1}>
                     {[...Array(6)].map((_, i) => (
-                        <OurilHouse
+                        <OwareHouse
                             key={"1_" + (5 - i)}
                             seeds={board[1][5 - i]}
                             onClick={() => play([1, 5 - i])}
                             active={activePlayer == p2}
-                        ></OurilHouse>
+                        ></OwareHouse>
                     ))}
                 </Stack>
                 <Stack direction="row" spacing={1}>
                     {[...Array(6)].map((_, i) => (
-                        <OurilHouse
+                        <OwareHouse
                             key={"0_" + i}
                             seeds={board[0][i]}
                             onClick={() => play([0, i])}
                             active={activePlayer == p1}
-                        ></OurilHouse>
+                        ></OwareHouse>
                     ))}
                 </Stack>
                 <Stack

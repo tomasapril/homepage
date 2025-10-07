@@ -58,7 +58,7 @@ function generatePositions({
     return positions;
 }
 
-export default function OurilHouse({ seeds, onClick, active }) {
+export default function OwareHouse({ seeds, onClick, active }) {
     const pitSize = 60;
     const seedSize = 12;
     const minDistance = seedSize + 2; // required distance between seeds

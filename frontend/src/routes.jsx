@@ -2,7 +2,7 @@ import { createBrowserRouter, Link } from "react-router";
 import Home from "./Home";
 import Game from "./Game";
 import WipPage from "./WipPage";
-import Ouril from "./Ouril";
+import Oware from "./Oware";
 import StartButton from "./StartButton";
 
 const basename = import.meta.env.VITE_BASENAME;
@@ -24,7 +24,7 @@ const router = createBrowserRouter(
                     index: true,
                     Component: StartButton,
                 },
-                { path: "ouril", Component: Ouril },
+                { path: "oware", Component: Oware },
             ],
         },
         {

@@ -4,7 +4,7 @@ import { Link } from "react-router";
 export default function StartButton() {
     return (
         <>
-            <Button variant="contained" component={Link} to="ouril">
+            <Button variant="contained" component={Link} to="oware">
                 Start
             </Button>
         </>
