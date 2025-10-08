@@ -47,8 +47,12 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
             hasWinner = true;
         }
         if (hasWinner) {
-            const winnerIndex = scores.findIndex((x) => x == maxScore);
-            winner = winnerIndex == 0 ? p1 : p2;
+            if (scores[0] == scores[1]) {
+                winner = "draw";
+            } else {
+                const winnerIndex = scores.findIndex((x) => x == maxScore);
+                winner = winnerIndex == 0 ? p1 : p2;
+            }
         }
         return winner;
     }
