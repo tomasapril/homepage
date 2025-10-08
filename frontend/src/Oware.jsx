@@ -8,14 +8,18 @@ import InfoIcon from "@mui/icons-material/Info";
 import InfoDialog from "./InfoDialog";
 
 // TODO: refactor this component
-// TODO: refactor valid move into state
+// TODO: draw when lower scores than 24
 
 export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
     const [info, setInfo] = useState(false);
 
     const initBoard = [
-        [4, 4, 4, 4, 4, 4],
-        [4, 4, 4, 4, 4, 4],
+        Array(6)
+            .fill()
+            .map(() => ({ seeds: 4, valid: true })),
+        Array(6)
+            .fill()
+            .map(() => ({ seeds: 4, valid: false })),
     ];
 
     const [board, setBoard] = useState(initBoard);
@@ -39,9 +43,7 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
             winner = "draw";
         } else if (maxScore > 24) {
             hasWinner = true;
-        } else if (
-            !hasValidMoves(nextPlayer == p1 ? 0 : 1, board, nextPlayer)
-        ) {
+        } else if (!hasValidMoves(board, nextPlayer)) {
             hasWinner = true;
         }
         if (hasWinner) {
@@ -51,10 +53,9 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
         return winner;
     }
 
-    function hasValidMoves(side, board, player) {
-        return board[side].some((_, i) =>
-            validateMove([side, i], board, player)
-        );
+    function hasValidMoves(board, player) {
+        const side = player == p1 ? 0 : 1;
+        return board[side].some((x) => x.valid);
     }
 
     function validateMove([side, place], board, activePlayer) {
@@ -63,28 +64,36 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
         if (side != playerSide) {
             return false;
         }
-        if (board[side][place] == 0) {
+        if (board[side][place].seeds == 0) {
             return false;
         }
-        if (board[opponentSide].every((x) => x == 0)) {
-            if (board[side][place] < board[side].length - place) {
+        if (board[opponentSide].every((x) => x.seeds == 0)) {
+            if (board[side][place].seeds < board[side].length - place) {
                 return false;
             }
         }
         return true;
     }
 
+    function updateValidMoves(board, player) {
+        board.forEach((side, s_i) => {
+            side.forEach((cell, x_i) => {
+                cell.valid = validateMove([s_i, x_i], board, player);
+            });
+        });
+    }
+
     function moveSeeds([side, place], board) {
         let flatBoard = board.flat();
         const pos = side * 6 + place;
-        const numberOfSeeds = flatBoard[pos];
-        flatBoard[pos] = 0;
+        const numberOfSeeds = flatBoard[pos].seeds;
+        flatBoard[pos].seeds = 0;
         let currentPos = pos;
         let currentSeeds = numberOfSeeds;
         while (currentSeeds > 0) {
             currentPos = (currentPos + 1) % flatBoard.length;
             if (currentPos != pos) {
-                flatBoard[currentPos]++;
+                flatBoard[currentPos].seeds++;
                 currentSeeds--;
             }
         }
@@ -102,12 +111,12 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
 
     function eat(flatBoard, side, pos, eaten = 0) {
         if (
-            flatBoard[pos] >= 2 &&
-            flatBoard[pos] <= 3 &&
+            flatBoard[pos].seeds >= 2 &&
+            flatBoard[pos].seeds <= 3 &&
             Math.floor(pos / (flatBoard.length / 2)) != side
         ) {
-            eaten += flatBoard[pos];
-            flatBoard[pos] = 0;
+            eaten += flatBoard[pos].seeds;
+            flatBoard[pos].seeds = 0;
             const nextPos = (pos - 1 + flatBoard.length) % flatBoard.length;
             return eat(flatBoard, side, nextPos, eaten);
         } else {
@@ -127,15 +136,15 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
             alert("The game is over. \n No more moves can be made.");
             return;
         }
-        const moveIsValid = validateMove(pos, board, activePlayer);
-        if (!moveIsValid) {
+        if (!board[pos[0]][pos[1]].valid) {
             alert("Invalid move. \n" + activePlayer + ", play another move.");
             return;
         }
         const [newScores, newBoard] = moveSeeds(pos, board);
         setScores(newScores);
-        setBoard(newBoard);
         const nextPlayer = activePlayer == p1 ? p2 : p1;
+        updateValidMoves(newBoard, nextPlayer);
+        setBoard(newBoard);
         setActivePlayer(nextPlayer);
         const newWinner = gameOverCheck(newScores, newBoard, nextPlayer);
         if (newWinner) setWinner(newWinner);
@@ -188,9 +197,9 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
                     {[...Array(6)].map((_, i) => (
                         <OwareHouse
                             key={"1_" + (5 - i)}
-                            seeds={board[1][5 - i]}
+                            seeds={board[1][5 - i].seeds}
                             onClick={() => play([1, 5 - i])}
-                            active={activePlayer == p2}
+                            active={board[1][5 - i].valid}
                         ></OwareHouse>
                     ))}
                 </Stack>
@@ -198,9 +207,9 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
                     {[...Array(6)].map((_, i) => (
                         <OwareHouse
                             key={"0_" + i}
-                            seeds={board[0][i]}
+                            seeds={board[0][i].seeds}
                             onClick={() => play([0, i])}
-                            active={activePlayer == p1}
+                            active={board[0][i].valid}
                         ></OwareHouse>
                     ))}
                 </Stack>
