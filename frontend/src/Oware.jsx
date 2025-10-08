@@ -7,13 +7,8 @@ import { IconButton, Link } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import InfoDialog from "./InfoDialog";
 
-// TODO: refactor this component
-// TODO: draw when lower scores than 24
-
-export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
-    const [info, setInfo] = useState(false);
-
-    const initBoard = [
+function initBoard() {
+    return [
         Array(6)
             .fill()
             .map(() => ({ seeds: 4, valid: true })),
@@ -21,137 +16,128 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
             .fill()
             .map(() => ({ seeds: 4, valid: false })),
     ];
+}
 
+function reshape(flatBoard) {
+    return [flatBoard.slice(0, 6), flatBoard.slice(6, 12)];
+}
+
+function hasValidMoves(board, player) {
+    return board[player].some((x) => x.valid);
+}
+
+function validateMove(side, place, board, player) {
+    const opponent = 1 - player;
+    if (side !== player) return false;
+    if (board[side][place].seeds === 0) return false;
+    if (board[opponent].every((x) => x.seeds === 0)) {
+        if (board[side][place].seeds < board[side].length - place) return false;
+    }
+    return true;
+}
+
+function updateValidMoves(board, player) {
+    return board.map((side, s_i) => {
+        side.map((cell, x_i) => ({
+            ...cell,
+            valid: validateMove(s_i, x_i, board, player),
+        }));
+    });
+}
+
+function eat(flatBoard, side, pos, eaten = 0) {
+    if (
+        flatBoard[pos].seeds >= 2 &&
+        flatBoard[pos].seeds <= 3 &&
+        Math.floor(pos / (flatBoard.length / 2)) !== side
+    ) {
+        eaten += flatBoard[pos].seeds;
+        flatBoard[pos].seeds = 0;
+        const nextPos = (pos - 1 + flatBoard.length) % flatBoard.length;
+        return eat(flatBoard, side, nextPos, eaten);
+    }
+    return [flatBoard, eaten];
+}
+
+function moveSeeds(side, place, board, scores, player) {
+    let flatBoard = board.flat();
+    const pos = side * 6 + place;
+    const seeds = flatBoard[pos].seeds;
+    flatBoard[pos].seeds = 0;
+
+    let currentPos = pos;
+    let currentSeeds = seeds;
+    while (currentSeeds > 0) {
+        currentPos = (currentPos + 1) % flatBoard.length;
+        if (currentPos !== pos) {
+            flatBoard[currentPos].seeds++;
+            currentSeeds--;
+        }
+    }
+
+    const [newFlatBoard, eaten] = eat(
+        flatBoard,
+        side,
+        (pos + seeds) % flatBoard.length
+    );
+    const newScores = [...scores];
+    newScores[player] += eaten;
+
+    return [newScores, reshape(newFlatBoard)];
+}
+
+function gameOverCheck(scores, board, nextPlayer, players) {
+    const maxScore = Math.max(...scores);
+    if (scores[0] === 24 && scores[1] === 24) return "draw";
+    if (maxScore > 24 || !hasValidMoves(board, nextPlayer)) {
+        if (scores[0] === scores[1]) return "draw";
+        return scores[0] > scores[1] ? players[0] : players[1];
+    }
+    return null;
+}
+
+export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
+    const [info, setInfo] = useState(false);
     const [board, setBoard] = useState(initBoard);
-
-    const [activePlayer, setActivePlayer] = useState(p1);
+    const [activePlayer, setActivePlayer] = useState(0);
     const [scores, setScores] = useState([0, 0]);
-    const [winner, setWinner] = useState();
+    const [winner, setWinner] = useState(null);
+
+    const players = [p1, p2];
 
     function handleRestart() {
-        setBoard(initBoard);
+        setBoard(initBoard());
         setScores([0, 0]);
-        setActivePlayer(p1);
-        setWinner(undefined);
+        setActivePlayer(0);
+        setWinner(null);
     }
 
-    function gameOverCheck(scores, board, nextPlayer) {
-        let hasWinner = false;
-        let winner = undefined;
-        const maxScore = Math.max(...scores);
-        if (scores[0] == 24 && scores[1] == 24) {
-            winner = "draw";
-        } else if (maxScore > 24) {
-            hasWinner = true;
-        } else if (!hasValidMoves(board, nextPlayer)) {
-            hasWinner = true;
-        }
-        if (hasWinner) {
-            if (scores[0] == scores[1]) {
-                winner = "draw";
-            } else {
-                const winnerIndex = scores.findIndex((x) => x == maxScore);
-                winner = winnerIndex == 0 ? p1 : p2;
-            }
-        }
-        return winner;
-    }
-
-    function hasValidMoves(board, player) {
-        const side = player == p1 ? 0 : 1;
-        return board[side].some((x) => x.valid);
-    }
-
-    function validateMove([side, place], board, activePlayer) {
-        const playerSide = activePlayer == p1 ? 0 : 1;
-        const opponentSide = 1 - playerSide;
-        if (side != playerSide) {
-            return false;
-        }
-        if (board[side][place].seeds == 0) {
-            return false;
-        }
-        if (board[opponentSide].every((x) => x.seeds == 0)) {
-            if (board[side][place].seeds < board[side].length - place) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    function updateValidMoves(board, player) {
-        board.forEach((side, s_i) => {
-            side.forEach((cell, x_i) => {
-                cell.valid = validateMove([s_i, x_i], board, player);
-            });
-        });
-    }
-
-    function moveSeeds([side, place], board) {
-        let flatBoard = board.flat();
-        const pos = side * 6 + place;
-        const numberOfSeeds = flatBoard[pos].seeds;
-        flatBoard[pos].seeds = 0;
-        let currentPos = pos;
-        let currentSeeds = numberOfSeeds;
-        while (currentSeeds > 0) {
-            currentPos = (currentPos + 1) % flatBoard.length;
-            if (currentPos != pos) {
-                flatBoard[currentPos].seeds++;
-                currentSeeds--;
-            }
-        }
-        const [newFlatBoard, eaten] = eat(
-            flatBoard,
-            side,
-            (pos + numberOfSeeds) % flatBoard.length
-        );
-        const newScores =
-            activePlayer == p1
-                ? [scores[0] + eaten, scores[1]]
-                : [scores[0], scores[1] + eaten];
-        return [newScores, reshape(newFlatBoard)];
-    }
-
-    function eat(flatBoard, side, pos, eaten = 0) {
-        if (
-            flatBoard[pos].seeds >= 2 &&
-            flatBoard[pos].seeds <= 3 &&
-            Math.floor(pos / (flatBoard.length / 2)) != side
-        ) {
-            eaten += flatBoard[pos].seeds;
-            flatBoard[pos].seeds = 0;
-            const nextPos = (pos - 1 + flatBoard.length) % flatBoard.length;
-            return eat(flatBoard, side, nextPos, eaten);
-        } else {
-            return [flatBoard, eaten];
-        }
-    }
-
-    function reshape(flatBoard) {
-        const shapedBoard = [];
-        shapedBoard.push(flatBoard.slice(0, 6));
-        shapedBoard.push(flatBoard.slice(6, 12));
-        return shapedBoard;
-    }
-
-    function play(pos = [0, 0]) {
+    function play([side, place]) {
         if (winner) {
             alert("The game is over. \n No more moves can be made.");
             return;
         }
-        if (!board[pos[0]][pos[1]].valid) {
+        if (!board[side][place].valid) {
             alert("Invalid move. \n" + activePlayer + ", play another move.");
             return;
         }
-        const [newScores, newBoard] = moveSeeds(pos, board);
+
+        const [newScores, newBoard] = moveSeeds(
+            side,
+            place,
+            board,
+            scores,
+            activePlayer
+        );
+        const nextPlayer = 1 - activePlayer;
+        const updatedBoard = updateValidMoves(newBoard, nextPlayer);
+
         setScores(newScores);
-        const nextPlayer = activePlayer == p1 ? p2 : p1;
-        updateValidMoves(newBoard, nextPlayer);
-        setBoard(newBoard);
+        setBoard(updatedBoard);
         setActivePlayer(nextPlayer);
-        const newWinner = gameOverCheck(newScores, newBoard, nextPlayer);
-        if (newWinner) setWinner(newWinner);
+
+        const result = gameOverCheck(newScores, newBoard, nextPlayer, players);
+        if (result) setWinner(result);
     }
 
     return (
@@ -164,6 +150,7 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
             >
                 <InfoIcon />
             </IconButton>
+
             <InfoDialog
                 open={info}
                 title="Oware"
@@ -180,31 +167,22 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
                 </Link>
                 .
             </InfoDialog>
+
             <Stack spacing={4} alignItems="center">
-                <Stack
-                    alignItems="center"
-                    sx={{
-                        p: 1,
-                        borderRadius: "15%",
-                        bgcolor:
-                            activePlayer == p2 ? "primary.light" : undefined,
-                        color:
-                            activePlayer == p2
-                                ? "primary.contrastText"
-                                : "default",
-                    }}
-                >
-                    <Typography variant="h6">{p2}</Typography>
-                    <Typography variant="h5">{scores[1]}</Typography>
-                </Stack>
+                <PlayerPanel
+                    name={p2}
+                    score={scores[1]}
+                    active={activePlayer === 1}
+                />
+
                 <Stack direction="row" spacing={1}>
                     {[...Array(6)].map((_, i) => (
                         <OwareHouse
                             key={"1_" + (5 - i)}
                             seeds={board[1][5 - i].seeds}
-                            onClick={() => play([1, 5 - i])}
                             active={board[1][5 - i].valid}
-                        ></OwareHouse>
+                            onClick={() => play([1, 5 - i])}
+                        />
                     ))}
                 </Stack>
                 <Stack direction="row" spacing={1}>
@@ -212,27 +190,18 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
                         <OwareHouse
                             key={"0_" + i}
                             seeds={board[0][i].seeds}
-                            onClick={() => play([0, i])}
                             active={board[0][i].valid}
-                        ></OwareHouse>
+                            onClick={() => play([0, i])}
+                        />
                     ))}
                 </Stack>
-                <Stack
-                    alignItems="center"
-                    sx={{
-                        p: 1,
-                        borderRadius: "15%",
-                        bgcolor:
-                            activePlayer == p1 ? "primary.light" : undefined,
-                        color:
-                            activePlayer == p1
-                                ? "primary.contrastText"
-                                : "default",
-                    }}
-                >
-                    <Typography variant="h6">{p1}</Typography>
-                    <Typography variant="h5">{scores[0]}</Typography>
-                </Stack>
+
+                <PlayerPanel
+                    name={p1}
+                    score={scores[0]}
+                    active={activePlayer === 0}
+                />
+
                 <Button
                     variant="contained"
                     sx={{ bgcolor: "primary.dark" }}
@@ -241,13 +210,33 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
                     Restart
                 </Button>
             </Stack>
+
             <InfoDialog
-                title={winner == "draw" ? "It's a draw!" : winner + " wins! 🎉"}
+                title={
+                    winner === "draw" ? "It's a draw!" : winner + " wins! 🎉"
+                }
                 open={winner}
                 handleClose={handleRestart}
             >
                 Close this window to restart.
             </InfoDialog>
         </>
+    );
+}
+
+function PlayerPanel({ name, score, active }) {
+    return (
+        <Stack
+            alignItems="center"
+            sx={{
+                p: 1,
+                borderRadius: "15%",
+                bgcolor: active ? "primary.light" : undefined,
+                color: active ? "primary.contrastText" : "default",
+            }}
+        >
+            <Typography variant="h6">{name}</Typography>
+            <Typography variant="h5">{score}</Typography>
+        </Stack>
     );
 }
