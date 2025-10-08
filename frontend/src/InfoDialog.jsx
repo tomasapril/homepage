@@ -1,6 +1,8 @@
 import { Dialog, DialogContent, DialogTitle, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
+// TODO: refactor this component
+
 export default function InfoDialog({ children, open, handleClose, title }) {
     return (
         <Dialog open={open} onClose={handleClose}>

@@ -7,6 +7,7 @@ import { IconButton, Link } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import InfoDialog from "./InfoDialog";
 
+// TODO: refactor this component
 // TODO: refactor valid move into state
 
 export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {

@@ -1,7 +1,26 @@
-import React from "react";
+import { useMemo } from "react";
 import { ButtonBase } from "@mui/material";
 
-// TODO: refactor this component
+function randomCoordinate(maxRadius, center, seedSize) {
+    const r = Math.sqrt(Math.random()) * maxRadius;
+    const theta = Math.random() * Math.PI * 2;
+    const cx = center + r * Math.cos(theta);
+    const cy = center + r * Math.sin(theta);
+
+    const x = cx - seedSize / 2;
+    const y = cy - seedSize / 2;
+
+    return { x, y };
+}
+
+function overlaps(positions, pos, minDistance) {
+    return positions.some((p) => {
+        const dx = p.x - pos.x;
+        const dy = p.y - pos.y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        return d < minDistance;
+    });
+}
 
 function generatePositions({
     count,
@@ -11,48 +30,22 @@ function generatePositions({
     maxTries = 100,
 }) {
     const positions = [];
-    const maxRadius = pitSize / 2 - seedSize / 2 - 4; // center radius available
+    const maxRadius = pitSize / 2 - seedSize / 2 - 4;
     const center = pitSize / 2;
 
     for (let i = 0; i < count; i++) {
         let pos = null;
-        let tries = 0;
 
-        // Try to find a non-overlapping candidate (polar sampling for uniform distribution)
-        while (tries < maxTries) {
-            tries++;
-            const r = Math.sqrt(Math.random()) * maxRadius;
-            const theta = Math.random() * Math.PI * 2;
-            const cx = center + r * Math.cos(theta);
-            const cy = center + r * Math.sin(theta);
+        for (let tries = 0; tries < maxTries; tries++) {
+            const randomPos = randomCoordinate(maxRadius, center, seedSize);
 
-            const x = cx - seedSize / 2;
-            const y = cy - seedSize / 2;
-
-            const overlaps = positions.some((p) => {
-                const dx = p.x - x;
-                const dy = p.y - y;
-                const d = Math.sqrt(dx * dx + dy * dy);
-                return d < minDistance;
-            });
-
-            if (!overlaps) {
-                pos = { x, y };
+            if (!overlaps(positions, randomPos, minDistance)) {
+                pos = randomPos;
                 break;
             }
         }
 
-        // Fallback: if no non-overlapping spot found, place one anyway (still inside circle)
-        if (!pos) {
-            const r = Math.sqrt(Math.random()) * maxRadius;
-            const theta = Math.random() * Math.PI * 2;
-            const cx = center + r * Math.cos(theta);
-            const cy = center + r * Math.sin(theta);
-
-            pos = { x: cx - seedSize / 2, y: cy - seedSize / 2 };
-        }
-
-        positions.push(pos);
+        positions.push(pos ?? randomCoordinate(maxRadius, center, seedSize));
     }
 
     return positions;
@@ -61,7 +54,7 @@ function generatePositions({
 export default function OwareHouse({ seeds, onClick, active }) {
     const pitSize = 60;
     const seedSize = 12;
-    const minDistance = seedSize + 2; // required distance between seeds
+    const minDistance = seedSize + 2;
 
     const activeColor = "#f5f5f5";
     const activeSeedColor = "saddlebrown";
@@ -71,7 +64,7 @@ export default function OwareHouse({ seeds, onClick, active }) {
     const passiveSeedColor = "#767676f5";
     const passiveSeedBorder = "#464646ff";
 
-    const positions = React.useMemo(
+    const positions = useMemo(
         () =>
             generatePositions({
                 count: seeds,
@@ -89,7 +82,7 @@ export default function OwareHouse({ seeds, onClick, active }) {
                 width: pitSize,
                 height: pitSize,
                 borderRadius: "50%",
-                border: "2px solid #333",
+                border: "2px solid #333333ff",
                 backgroundColor: active ? activeColor : passiveColor,
                 position: "relative",
             }}
@@ -110,7 +103,7 @@ export default function OwareHouse({ seeds, onClick, active }) {
                         border:
                             "1px solid " +
                             (active ? activeSeedBorder : passiveSeedBorder),
-                        boxShadow: "1px 1px 3px rgba(0,0,0,0.4)",
+                        boxShadow: "1px 1px 3px #00000066",
                     }}
                 />
             ))}
