@@ -1,8 +1,6 @@
 import { Dialog, DialogContent, DialogTitle, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-// TODO: refactor this component
-
 export default function InfoDialog({ children, open, handleClose, title }) {
     return (
         <Dialog open={open} onClose={handleClose}>
@@ -13,12 +11,12 @@ export default function InfoDialog({ children, open, handleClose, title }) {
                     position: "absolute",
                     right: 0,
                     top: 0,
-                    color: "grey",
+                    color: (theme) => theme.palette.grey[500],
                 }}
             >
                 <CloseIcon />
             </IconButton>
-            <DialogTitle>{title}</DialogTitle>
+            <DialogTitle sx={{ pr: 6 }}>{title}</DialogTitle>
             <DialogContent>{children}</DialogContent>
         </Dialog>
     );
