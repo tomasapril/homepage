@@ -8,6 +8,7 @@ export default defineConfig(({ mode }) => {
 
     return {
         plugins: [react()],
+        server: { host: true },
         base: env.VITE_BASENAME || "/",
     };
 });
