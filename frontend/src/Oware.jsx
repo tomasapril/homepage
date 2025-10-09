@@ -38,7 +38,7 @@ function validateMove(side, place, board, player) {
 
 function updateValidMoves(board, player) {
     return board.map((side, s_i) => {
-        side.map((cell, x_i) => ({
+        return side.map((cell, x_i) => ({
             ...cell,
             valid: validateMove(s_i, x_i, board, player),
         }));
@@ -118,7 +118,11 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
             return;
         }
         if (!board[side][place].valid) {
-            alert("Invalid move. \n" + activePlayer + ", play another move.");
+            alert(
+                "Invalid move. \n" +
+                    players[activePlayer] +
+                    ", play another move."
+            );
             return;
         }
 
@@ -136,7 +140,12 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
         setBoard(updatedBoard);
         setActivePlayer(nextPlayer);
 
-        const result = gameOverCheck(newScores, newBoard, nextPlayer, players);
+        const result = gameOverCheck(
+            newScores,
+            updatedBoard,
+            nextPlayer,
+            players
+        );
         if (result) setWinner(result);
     }
 
