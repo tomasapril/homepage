@@ -3,7 +3,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import OwareHouse from "./OwareHouse";
-import { IconButton, Link } from "@mui/material";
+import { IconButton, Link, useMediaQuery, useTheme } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import InfoDialog from "./InfoDialog";
 
@@ -97,6 +97,9 @@ function gameOverCheck(scores, board, nextPlayer, players) {
 }
 
 export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
+    const theme = useTheme();
+    const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
     const [info, setInfo] = useState(false);
     const [board, setBoard] = useState(initBoard);
     const [activePlayer, setActivePlayer] = useState(0);
@@ -177,7 +180,7 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
                 .
             </InfoDialog>
 
-            <Stack spacing={4} alignItems="center">
+            <Stack spacing={smallScreen ? 1 : 4} alignItems="center">
                 <PlayerPanel
                     name={p2}
                     score={scores[1]}
@@ -191,6 +194,7 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
                             seeds={board[1][5 - i].seeds}
                             active={board[1][5 - i].valid}
                             onClick={() => play([1, 5 - i])}
+                            smallScreen={smallScreen}
                         />
                     ))}
                 </Stack>
@@ -201,6 +205,7 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
                             seeds={board[0][i].seeds}
                             active={board[0][i].valid}
                             onClick={() => play([0, i])}
+                            smallScreen={smallScreen}
                         />
                     ))}
                 </Stack>

@@ -51,9 +51,14 @@ function generatePositions({
     return positions;
 }
 
-export default function OwareHouse({ seeds, onClick, active }) {
-    const pitSize = 60;
-    const seedSize = 12;
+export default function OwareHouse({
+    seeds,
+    onClick,
+    active,
+    smallScreen = false,
+}) {
+    const pitSize = smallScreen ? 45 : 60;
+    const seedSize = smallScreen ? 9 : 12;
     const minDistance = seedSize + 2;
 
     const activeColor = "#f5f5f5";
