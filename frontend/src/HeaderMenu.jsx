@@ -1,16 +1,12 @@
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
-import { Link as RouterLink } from "react-router";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
 import Drawer from "@mui/material/Drawer";
-import { menuItems } from "./menuItems";
+import { menuItems } from "./menuConfig";
+import { MenuItems } from "./MenuItems";
 
-// TODO: add submenu functionality
-// TODO: style the new menu
+// TODO: style the new menu (visualization of submenus, padding vs fixed width, colors?)
 
 export default function HeaderMenu() {
     const [open, setOpen] = useState(false);
@@ -26,17 +22,7 @@ export default function HeaderMenu() {
     const sidebarDrawer = (
         <Drawer open={open} onClose={handleClose}>
             <List>
-                {menuItems.map((item) => (
-                    <ListItem>
-                        <ListItemButton
-                            component={RouterLink}
-                            to={item.path}
-                            onClick={handleClose}
-                        >
-                            <ListItemText primary={item.label} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
+                <MenuItems items={menuItems} onClose={handleClose} />
             </List>
         </Drawer>
     );
