@@ -1,55 +1,43 @@
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import { Link as RouterLink } from "react-router";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Drawer from "@mui/material/Drawer";
+import { menuItems } from "./menuItems";
 
-// TODO: rewrite to sidebar menu
-// TODO: create and use central item for defining menu items
 // TODO: add submenu functionality
+// TODO: style the new menu
 
 export default function HeaderMenu() {
     const [open, setOpen] = useState(false);
-    const [closing, setClosing] = useState(false);
 
     function handleClose() {
-        setClosing(true);
         setOpen(false);
     }
 
-    function handleTransitionEnd() {
-        setClosing(false);
-    }
-
     function handleToggle() {
-        if (!closing) {
-            setOpen(!open);
-        }
+        setOpen((prev) => !prev);
     }
 
-    const sidebar = (
-        <List>
-            <ListItem>
-                <ListItemButton>
-                    <ListItemText primary={"Placeholder"} />
-                </ListItemButton>
-            </ListItem>
-        </List>
-    );
-
-    const sidebarParent = (
-        <Drawer
-            open={open}
-            onClose={handleClose}
-            onTransitionEnd={handleTransitionEnd}
-        >
-            {sidebar}
+    const sidebarDrawer = (
+        <Drawer open={open} onClose={handleClose}>
+            <List>
+                {menuItems.map((item) => (
+                    <ListItem>
+                        <ListItemButton
+                            component={RouterLink}
+                            to={item.path}
+                            onClick={handleClose}
+                        >
+                            <ListItemText primary={item.label} />
+                        </ListItemButton>
+                    </ListItem>
+                ))}
+            </List>
         </Drawer>
     );
 
@@ -64,23 +52,8 @@ export default function HeaderMenu() {
             >
                 <MenuIcon />
             </IconButton>
-            {/* <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-                <MenuItem
-                    component={RouterLink}
-                    to="/home"
-                    onClick={handleClose}
-                >
-                    Home
-                </MenuItem>
-                <MenuItem
-                    component={RouterLink}
-                    to="/game"
-                    onClick={handleClose}
-                >
-                    Game
-                </MenuItem>
-            </Menu> */}
-            {sidebarParent}
+
+            {sidebarDrawer}
         </>
     );
 }
