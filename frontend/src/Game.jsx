@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Footer from "./Footer";
 import Container from "@mui/material/Container";
 import { Outlet } from "react-router";
+import Breadcrumb from "./Breadcrumb";
 
 export default function Game() {
     return (
@@ -22,6 +23,8 @@ export default function Game() {
                         flexGrow: 1,
                     }}
                 >
+                    <Breadcrumb />
+
                     <Box
                         sx={{
                             flexGrow: 1,

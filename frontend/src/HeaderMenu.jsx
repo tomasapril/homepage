@@ -1,26 +1,38 @@
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import { Link as RouterLink } from "react-router";
+import List from "@mui/material/List";
+import Drawer from "@mui/material/Drawer";
+import { menuItems } from "./menuConfig";
+import { MenuItems } from "./MenuItems";
 
 export default function HeaderMenu() {
-    const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
-
-    function handleClick(e) {
-        setAnchorEl(e.currentTarget);
-    }
+    const [open, setOpen] = useState(false);
 
     function handleClose() {
-        setAnchorEl(null);
+        setOpen(false);
     }
+
+    function handleToggle() {
+        setOpen((prev) => !prev);
+    }
+
+    const sidebarDrawer = (
+        <Drawer
+            open={open}
+            onClose={handleClose}
+            slotProps={{ paper: { sx: { width: { xs: 180, sm: 240 } } } }}
+        >
+            <List>
+                <MenuItems items={menuItems} onClose={handleClose} />
+            </List>
+        </Drawer>
+    );
 
     return (
         <>
             <IconButton
-                onClick={handleClick}
+                onClick={handleToggle}
                 size="large"
                 edge="start"
                 color="inherit"
@@ -28,22 +40,8 @@ export default function HeaderMenu() {
             >
                 <MenuIcon />
             </IconButton>
-            <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-                <MenuItem
-                    component={RouterLink}
-                    to="/home"
-                    onClick={handleClose}
-                >
-                    Home
-                </MenuItem>
-                <MenuItem
-                    component={RouterLink}
-                    to="/game"
-                    onClick={handleClose}
-                >
-                    Game
-                </MenuItem>
-            </Menu>
+
+            {sidebarDrawer}
         </>
     );
 }
