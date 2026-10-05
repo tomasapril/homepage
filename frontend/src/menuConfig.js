@@ -2,11 +2,6 @@ import HomeIcon from "@mui/icons-material/Home";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import CircleIcon from "@mui/icons-material/Circle";
 
-// export const menuItems = [
-//     { id: "home", label: "Home", path: "/home" },
-//     { id: "game", label: "Game", path: "/game" },
-// ];
-
 export const menuItems = [
     { id: "home", label: "Home", path: "/home", icon: HomeIcon },
     {
@@ -15,18 +10,6 @@ export const menuItems = [
         path: "/game",
         icon: SportsEsportsIcon,
         children: [
-            {
-                id: "game-deeper",
-                label: "Deeper",
-                icon: CircleIcon,
-                children: [
-                    {
-                        id: "game-deeper-home",
-                        label: "Home",
-                        path: "/home",
-                    },
-                ],
-            },
             {
                 id: "game-oware",
                 label: "Oware",
