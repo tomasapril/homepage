@@ -1,15 +1,13 @@
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { useState } from "react";
 import { Link as RouterLink } from "react-router";
 
-// TODO: icons
-// TODO: colors
 // TODO: size responsivity
 // TODO: visual sign of submenu (chevron or something)
-// TODO: hover state
 // TODO: active route indication
 
 export function MenuItems({ items, onClose, level = 0 }) {
@@ -46,6 +44,14 @@ export function MenuItems({ items, onClose, level = 0 }) {
                                     py: level < 2 ? 1 : 0,
                                 }}
                             >
+                                {item.icon && (
+                                    <ListItemIcon
+                                        sx={{ minWidth: 36, color: "inherit" }}
+                                    >
+                                        <item.icon />
+                                    </ListItemIcon>
+                                )}
+
                                 <ListItemText
                                     primary={item.label}
                                     slotProps={{
