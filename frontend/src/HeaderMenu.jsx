@@ -20,7 +20,11 @@ export default function HeaderMenu() {
     }
 
     const sidebarDrawer = (
-        <Drawer open={open} onClose={handleClose}>
+        <Drawer
+            open={open}
+            onClose={handleClose}
+            slotProps={{ paper: { sx: { width: { xs: 180, sm: 240 } } } }}
+        >
             <List>
                 <MenuItems items={menuItems} onClose={handleClose} />
             </List>

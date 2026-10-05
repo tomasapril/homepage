@@ -5,7 +5,15 @@ import ListItemText from "@mui/material/ListItemText";
 import { useState } from "react";
 import { Link as RouterLink } from "react-router";
 
-export function MenuItems({ items, onClose }) {
+// TODO: menu item vs subitem sizing
+// TODO: icons
+// TODO: colors
+// TODO: size responsivity
+// TODO: visual sign of submenu (chevron or something)
+// TODO: hover state
+// TODO: active route indication
+
+export function MenuItems({ items, onClose, level = 0 }) {
     const [openItems, setOpenItems] = useState({});
 
     function toggleItem(id) {
@@ -24,28 +32,26 @@ export function MenuItems({ items, onClose }) {
                 return (
                     <div key={item.id}>
                         <ListItem disablePadding>
-                            {hasChildren ? (
-                                <ListItemButton
-                                    onClick={() => toggleItem(item.id)}
-                                >
-                                    <ListItemText primary={item.label} />
-                                </ListItemButton>
-                            ) : (
-                                <ListItemButton
-                                    component={RouterLink}
-                                    to={item.path}
-                                    onClick={onClose}
-                                >
-                                    <ListItemText primary={item.label} />
-                                </ListItemButton>
-                            )}
+                            <ListItemButton
+                                component={hasChildren ? "button" : RouterLink}
+                                to={hasChildren ? undefined : item.path}
+                                onClick={
+                                    hasChildren
+                                        ? () => toggleItem(item.id)
+                                        : onClose
+                                }
+                                sx={{ pl: 2 + level * 2, pr: 2 }}
+                            >
+                                <ListItemText primary={item.label} />
+                            </ListItemButton>
                         </ListItem>
 
                         {hasChildren && isOpen && (
-                            <List sx={{ p1: 2 }}>
+                            <List disablePadding>
                                 <MenuItems
                                     items={item.children}
                                     onClose={onClose}
+                                    level={level + 1}
                                 />
                             </List>
                         )}
