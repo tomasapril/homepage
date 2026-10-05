@@ -5,10 +5,13 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { useState } from "react";
 import { Link as RouterLink } from "react-router";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import IconButton from "@mui/material/IconButton";
+import Collapse from "@mui/material/Collapse";
 
-// TODO: size responsivity
-// TODO: visual sign of submenu (chevron or something)
 // TODO: active route indication
+
+const transitionDuration = 200;
 
 export function MenuItems({ items, onClose, level = 0 }) {
     const [openItems, setOpenItems] = useState({});
@@ -28,14 +31,35 @@ export function MenuItems({ items, onClose, level = 0 }) {
 
                 return (
                     <div key={item.id}>
-                        <ListItem disablePadding>
+                        <ListItem
+                            disablePadding
+                            secondaryAction={
+                                hasChildren && (
+                                    <IconButton
+                                        onClick={() => toggleItem(item.id)}
+                                        color="inherit"
+                                    >
+                                        <ChevronRightIcon
+                                            sx={{
+                                                transform: isOpen
+                                                    ? "rotate(90deg)"
+                                                    : "none",
+                                                transition: `transform ${transitionDuration}ms`,
+                                            }}
+                                        />
+                                    </IconButton>
+                                )
+                            }
+                        >
                             <ListItemButton
-                                component={hasChildren ? "button" : RouterLink}
-                                to={hasChildren ? undefined : item.path}
+                                component={item.path ? RouterLink : "button"}
+                                to={item.path}
                                 onClick={
-                                    hasChildren
-                                        ? () => toggleItem(item.id)
-                                        : onClose
+                                    item.path
+                                        ? onClose
+                                        : hasChildren
+                                          ? () => toggleItem(item.id)
+                                          : undefined
                                 }
                                 sx={{
                                     pl: 2 + level * 2,
@@ -70,14 +94,20 @@ export function MenuItems({ items, onClose, level = 0 }) {
                             </ListItemButton>
                         </ListItem>
 
-                        {hasChildren && isOpen && (
-                            <List disablePadding>
-                                <MenuItems
-                                    items={item.children}
-                                    onClose={onClose}
-                                    level={level + 1}
-                                />
-                            </List>
+                        {hasChildren && (
+                            <Collapse
+                                in={isOpen}
+                                timeout={transitionDuration}
+                                unmountOnExit
+                            >
+                                <List disablePadding>
+                                    <MenuItems
+                                        items={item.children}
+                                        onClose={onClose}
+                                        level={level + 1}
+                                    />
+                                </List>
+                            </Collapse>
                         )}
                     </div>
                 );

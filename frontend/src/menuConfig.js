@@ -12,6 +12,7 @@ export const menuItems = [
     {
         id: "game",
         label: "Game",
+        path: "/game",
         icon: SportsEsportsIcon,
         children: [
             {

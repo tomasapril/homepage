@@ -6,8 +6,6 @@ import Drawer from "@mui/material/Drawer";
 import { menuItems } from "./menuConfig";
 import { MenuItems } from "./MenuItems";
 
-// TODO: style the new menu (visualization of submenus, padding vs fixed width, colors?)
-
 export default function HeaderMenu() {
     const [open, setOpen] = useState(false);
 
