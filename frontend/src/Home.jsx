@@ -18,7 +18,11 @@ export default function Home() {
             >
                 <Header title={"Home"} />
                 <Container sx={{ flexGrow: 1 }}>
-                    <Grid container spacing={2} justifyContent="center">
+                    <Grid
+                        container
+                        spacing={2}
+                        sx={{ justifyContent: "center" }}
+                    >
                         <HomeTile to={"/game"} title="Game" />
                         <HomeTile to={"/under-construction"} title="Other" />
                     </Grid>
