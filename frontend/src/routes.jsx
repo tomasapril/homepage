@@ -1,9 +1,10 @@
-import { createBrowserRouter, Link } from "react-router";
-import Home from "./Home";
+import { createBrowserRouter } from "react-router";
+
 import Game from "./Game";
-import WipPage from "./WipPage";
+import Home from "./Home";
 import Oware from "./Oware";
 import StartButton from "./StartButton";
+import WipPage from "./WipPage";
 
 const basename = import.meta.env.VITE_BASENAME;
 const router = createBrowserRouter(
@@ -34,7 +35,7 @@ const router = createBrowserRouter(
     ],
     {
         basename: basename || "/",
-    }
+    },
 );
 
 export default router;

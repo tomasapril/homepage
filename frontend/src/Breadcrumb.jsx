@@ -1,9 +1,10 @@
-import { useLocation } from "react-router";
-import { menuItems } from "./menuConfig";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
+import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { Link as RouterLink } from "react-router";
-import Link from "@mui/material/Link";
+import { useLocation } from "react-router";
+
+import { menuItems } from "./menuConfig";
 
 function findBreadcrumbs(items, path, parents = []) {
     for (const item of items) {

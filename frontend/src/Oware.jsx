@@ -1,11 +1,12 @@
+import InfoIcon from "@mui/icons-material/Info";
+import { IconButton, Link, useMediaQuery, useTheme } from "@mui/material";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
-import OwareHouse from "./OwareHouse";
-import { IconButton, Link, useMediaQuery, useTheme } from "@mui/material";
-import InfoIcon from "@mui/icons-material/Info";
+
 import InfoDialog from "./InfoDialog";
+import OwareHouse from "./OwareHouse";
 
 function initBoard() {
     return [

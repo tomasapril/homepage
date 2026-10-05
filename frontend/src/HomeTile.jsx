@@ -1,4 +1,5 @@
 import Typography from "@mui/material/Typography";
+
 import Tile from "./Tile";
 
 export default function HomeTile({ title, to }) {

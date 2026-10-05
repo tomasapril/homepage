@@ -1,9 +1,10 @@
-import Header from "./Header";
 import Box from "@mui/material/Box";
-import Footer from "./Footer";
 import Container from "@mui/material/Container";
 import { Outlet } from "react-router";
+
 import Breadcrumb from "./Breadcrumb";
+import Footer from "./Footer";
+import Header from "./Header";
 
 export default function Game() {
     return (

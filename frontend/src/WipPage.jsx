@@ -1,9 +1,10 @@
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Header from "./Header";
-import Container from "@mui/material/Container";
-import Footer from "./Footer";
 import ConstructionIcon from "@mui/icons-material/Construction";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+
+import Footer from "./Footer";
+import Header from "./Header";
 
 export default function WipPage() {
     return (

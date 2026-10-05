@@ -1,5 +1,5 @@
-import { useMemo } from "react";
 import { ButtonBase } from "@mui/material";
+import { useMemo } from "react";
 
 function randomCoordinate(maxRadius, center, seedSize) {
     const r = Math.sqrt(Math.random()) * maxRadius;

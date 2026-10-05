@@ -1,13 +1,14 @@
-import Button from "@mui/material/Button";
+import HomeIcon from "@mui/icons-material/Home";
 import AppBar from "@mui/material/AppBar";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import { Link } from "react-router";
+
 import HeaderMenu from "./HeaderMenu";
 import WipPopover from "./WipPopover";
-import HomeIcon from "@mui/icons-material/Home";
-import IconButton from "@mui/material/IconButton";
-import { Link } from "react-router";
 
 export default function Header({ title }) {
     return (

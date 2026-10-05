@@ -1,8 +1,9 @@
 import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+
 import Footer from "./Footer";
 import Header from "./Header";
-import Grid from "@mui/material/Grid";
-import Container from "@mui/material/Container";
 import HomeTile from "./HomeTile";
 
 export default function Home() {

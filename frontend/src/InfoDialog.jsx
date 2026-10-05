@@ -1,5 +1,5 @@
-import { Dialog, DialogContent, DialogTitle, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { Dialog, DialogContent, DialogTitle, IconButton } from "@mui/material";
 
 export default function InfoDialog({ children, open, handleClose, title }) {
     return (
