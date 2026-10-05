@@ -5,7 +5,6 @@ import ListItemText from "@mui/material/ListItemText";
 import { useState } from "react";
 import { Link as RouterLink } from "react-router";
 
-// TODO: menu item vs subitem sizing
 // TODO: icons
 // TODO: colors
 // TODO: size responsivity
@@ -40,9 +39,28 @@ export function MenuItems({ items, onClose, level = 0 }) {
                                         ? () => toggleItem(item.id)
                                         : onClose
                                 }
-                                sx={{ pl: 2 + level * 2, pr: 2 }}
+                                sx={{
+                                    pl: 2 + level * 2,
+                                    pr: 2,
+                                    minHeight: level < 2 ? 48 : 32,
+                                    py: level < 2 ? 1 : 0,
+                                }}
                             >
-                                <ListItemText primary={item.label} />
+                                <ListItemText
+                                    primary={item.label}
+                                    slotProps={{
+                                        primary: {
+                                            sx: {
+                                                fontSize:
+                                                    level === 0
+                                                        ? "1rem"
+                                                        : "0.9rem",
+                                                fontWeight:
+                                                    level === 0 ? "500" : "400",
+                                            },
+                                        },
+                                    }}
+                                />
                             </ListItemButton>
                         </ListItem>
 
