@@ -79,7 +79,7 @@ function moveSeeds(side, place, board, scores, player) {
     const [newFlatBoard, eaten] = eat(
         flatBoard,
         side,
-        (pos + seeds) % flatBoard.length
+        (pos + seeds) % flatBoard.length,
     );
     const newScores = [...scores];
     newScores[player] += eaten;
@@ -125,7 +125,7 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
             alert(
                 "Invalid move. \n" +
                     players[activePlayer] +
-                    ", play another move."
+                    ", play another move.",
             );
             return;
         }
@@ -135,7 +135,7 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
             place,
             board,
             scores,
-            activePlayer
+            activePlayer,
         );
         const nextPlayer = 1 - activePlayer;
         const updatedBoard = updateValidMoves(newBoard, nextPlayer);
@@ -148,7 +148,7 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
             newScores,
             updatedBoard,
             nextPlayer,
-            players
+            players,
         );
         if (result) setWinner(result);
     }

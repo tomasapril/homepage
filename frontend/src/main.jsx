@@ -15,5 +15,5 @@ createRoot(document.getElementById("root")).render(
     <StrictMode>
         <CssBaseline />
         <RouterProvider router={router} />
-    </StrictMode>
+    </StrictMode>,
 );

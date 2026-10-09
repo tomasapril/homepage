@@ -77,7 +77,7 @@ export default function OwareHouse({
                 seedSize,
                 minDistance,
             }),
-        [seeds, pitSize, seedSize, minDistance]
+        [seeds, pitSize, seedSize, minDistance],
     );
 
     return (
