@@ -2,44 +2,28 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import { Outlet } from "react-router";
 
-import Breadcrumb from "../components/Breadcrumb.jsx";
-import Footer from "../layout/Footer.jsx";
-import Header from "../layout/Header.jsx";
-
 export default function Game() {
     return (
         <>
-            <Box
+            <Container
                 sx={{
                     display: "flex",
                     flexDirection: "column",
-                    height: "100vh",
+                    flexGrow: 1,
                 }}
             >
-                <Header title={"Game"} />
-                <Container
+                <Box
                     sx={{
-                        display: "flex",
-                        flexDirection: "column",
                         flexGrow: 1,
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        position: "relative",
                     }}
                 >
-                    <Breadcrumb />
-
-                    <Box
-                        sx={{
-                            flexGrow: 1,
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            position: "relative",
-                        }}
-                    >
-                        <Outlet />
-                    </Box>
-                </Container>
-                <Footer />
-            </Box>
+                    <Outlet />
+                </Box>
+            </Container>
         </>
     );
 }

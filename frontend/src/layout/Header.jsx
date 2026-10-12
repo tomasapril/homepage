@@ -10,7 +10,7 @@ import WipPopover from "../components/WipPopover.jsx";
 
 import HeaderMenu from "./HeaderMenu.jsx";
 
-export default function Header({ title }) {
+export default function Header({ title = "" }) {
     return (
         <>
             <Box sx={{ p: 2 }}>
@@ -27,7 +27,7 @@ export default function Header({ title }) {
                             <HomeIcon />
                         </IconButton>
                         <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                            {title ? title : "Tomas April"}
+                            {title}
                         </Typography>
                         <WipPopover>
                             <Button color="inherit">Login</Button>
