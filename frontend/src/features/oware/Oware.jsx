@@ -1,11 +1,12 @@
+import InfoIcon from "@mui/icons-material/Info";
+import { IconButton, Link, useMediaQuery, useTheme } from "@mui/material";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
-import OwareHouse from "./OwareHouse";
-import { IconButton, Link, useMediaQuery, useTheme } from "@mui/material";
-import InfoIcon from "@mui/icons-material/Info";
-import InfoDialog from "./InfoDialog";
+
+import InfoDialog from "../../components/InfoDialog.jsx";
+import OwareHouse from "./OwareHouse.jsx";
 
 function initBoard() {
     return [
@@ -78,7 +79,7 @@ function moveSeeds(side, place, board, scores, player) {
     const [newFlatBoard, eaten] = eat(
         flatBoard,
         side,
-        (pos + seeds) % flatBoard.length
+        (pos + seeds) % flatBoard.length,
     );
     const newScores = [...scores];
     newScores[player] += eaten;
@@ -124,7 +125,7 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
             alert(
                 "Invalid move. \n" +
                     players[activePlayer] +
-                    ", play another move."
+                    ", play another move.",
             );
             return;
         }
@@ -134,7 +135,7 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
             place,
             board,
             scores,
-            activePlayer
+            activePlayer,
         );
         const nextPlayer = 1 - activePlayer;
         const updatedBoard = updateValidMoves(newBoard, nextPlayer);
@@ -147,7 +148,7 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
             newScores,
             updatedBoard,
             nextPlayer,
-            players
+            players,
         );
         if (result) setWinner(result);
     }
@@ -180,7 +181,7 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
                 .
             </InfoDialog>
 
-            <Stack spacing={smallScreen ? 1 : 4} alignItems="center">
+            <Stack spacing={smallScreen ? 1 : 4} sx={{ alignItems: "center" }}>
                 <PlayerPanel
                     name={p2}
                     score={scores[1]}
@@ -241,8 +242,8 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
 function PlayerPanel({ name, score, active }) {
     return (
         <Stack
-            alignItems="center"
             sx={{
+                alignItems: "center",
                 p: 1,
                 borderRadius: "15%",
                 bgcolor: active ? "primary.light" : undefined,

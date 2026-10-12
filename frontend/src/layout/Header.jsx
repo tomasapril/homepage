@@ -1,15 +1,16 @@
-import Button from "@mui/material/Button";
-import AppBar from "@mui/material/AppBar";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import HeaderMenu from "./HeaderMenu";
-import WipPopover from "./WipPopover";
 import HomeIcon from "@mui/icons-material/Home";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
 import { Link } from "react-router";
+import WipPopover from "../components/WipPopover.jsx";
 
-export default function Header({ title }) {
+import HeaderMenu from "./HeaderMenu.jsx";
+
+export default function Header({ title = "" }) {
     return (
         <>
             <Box sx={{ p: 2 }}>
@@ -26,7 +27,7 @@ export default function Header({ title }) {
                             <HomeIcon />
                         </IconButton>
                         <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                            {title ? title : "Tomas April"}
+                            {title}
                         </Typography>
                         <WipPopover>
                             <Button color="inherit">Login</Button>
