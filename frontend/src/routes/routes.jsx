@@ -1,10 +1,10 @@
 import { createBrowserRouter } from "react-router";
+import Oware from "../features/oware/Oware.jsx";
+import StartButton from "../features/oware/StartButton.jsx";
 
-import Game from "./Game";
-import Home from "./Home";
-import Oware from "./Oware";
-import StartButton from "./StartButton";
-import WipPage from "./WipPage";
+import Game from "../pages/Game.jsx";
+import Home from "../pages/Home.jsx";
+import WipPage from "../pages/WipPage.jsx";
 
 const basename = import.meta.env.VITE_BASENAME;
 const router = createBrowserRouter(

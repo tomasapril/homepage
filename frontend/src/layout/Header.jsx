@@ -6,9 +6,9 @@ import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router";
+import WipPopover from "../components/WipPopover.jsx";
 
-import HeaderMenu from "./HeaderMenu";
-import WipPopover from "./WipPopover";
+import HeaderMenu from "./HeaderMenu.jsx";
 
 export default function Header({ title }) {
     return (

@@ -3,7 +3,7 @@ import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { Link as RouterLink, useLocation } from "react-router";
 
-import { menuItems } from "./menuConfig";
+import { menuItems } from "../layout/menuConfig.js";
 
 function findBreadcrumbs(items, path, parents = []) {
     for (const item of items) {

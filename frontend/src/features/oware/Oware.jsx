@@ -5,8 +5,8 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 
-import InfoDialog from "./InfoDialog";
-import OwareHouse from "./OwareHouse";
+import InfoDialog from "../../components/InfoDialog.jsx";
+import OwareHouse from "./OwareHouse.jsx";
 
 function initBoard() {
     return [

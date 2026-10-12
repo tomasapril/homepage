@@ -4,8 +4,8 @@ import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import { useState } from "react";
 
-import { menuItems } from "./menuConfig";
-import { MenuItems } from "./MenuItems";
+import { menuItems } from "./menuConfig.js";
+import { MenuItems } from "./MenuItems.jsx";
 
 export default function HeaderMenu() {
     const [open, setOpen] = useState(false);

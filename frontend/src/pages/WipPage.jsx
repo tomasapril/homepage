@@ -3,8 +3,8 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 
-import Footer from "./Footer";
-import Header from "./Header";
+import Footer from "../layout/Footer.jsx";
+import Header from "../layout/Header.jsx";
 
 export default function WipPage() {
     return (

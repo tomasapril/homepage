@@ -1,10 +1,10 @@
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import HomeTile from "../features/home/HomeTile.jsx";
 
-import Footer from "./Footer";
-import Header from "./Header";
-import HomeTile from "./HomeTile";
+import Footer from "../layout/Footer.jsx";
+import Header from "../layout/Header.jsx";
 
 export default function Home() {
     return (

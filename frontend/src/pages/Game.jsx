@@ -2,9 +2,9 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import { Outlet } from "react-router";
 
-import Breadcrumb from "./Breadcrumb";
-import Footer from "./Footer";
-import Header from "./Header";
+import Breadcrumb from "../components/Breadcrumb.jsx";
+import Footer from "../layout/Footer.jsx";
+import Header from "../layout/Header.jsx";
 
 export default function Game() {
     return (
