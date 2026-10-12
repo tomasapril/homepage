@@ -181,7 +181,7 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
                 .
             </InfoDialog>
 
-            <Stack spacing={smallScreen ? 1 : 4} alignItems="center">
+            <Stack spacing={smallScreen ? 1 : 4} sx={{ alignItems: "center" }}>
                 <PlayerPanel
                     name={p2}
                     score={scores[1]}
@@ -242,8 +242,8 @@ export default function Oware({ p1 = "Player 1", p2 = "Player 2" }) {
 function PlayerPanel({ name, score, active }) {
     return (
         <Stack
-            alignItems="center"
             sx={{
+                alignItems: "center",
                 p: 1,
                 borderRadius: "15%",
                 bgcolor: active ? "primary.light" : undefined,

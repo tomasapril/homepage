@@ -1,8 +1,7 @@
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
-import { Link as RouterLink } from "react-router";
-import { useLocation } from "react-router";
+import { Link as RouterLink, useLocation } from "react-router";
 
 import { menuItems } from "./menuConfig";
 
@@ -41,7 +40,12 @@ export default function Breadcrumb() {
                 const isLast = index === breadcrumbs.length - 1;
 
                 return isLast ? (
-                    <Typography key={item.id} color="text.primary">
+                    <Typography
+                        key={item.id}
+                        sx={{
+                            color: "text.primary",
+                        }}
+                    >
                         {item.label}
                     </Typography>
                 ) : (
